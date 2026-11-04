@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --bg-abyss: #04101F;
+  --bg-deep: #071B34;
+  --color-cyan: #22D3EE;
+}
+
+body {
+  margin: 0;
+  background-color: #04101F;
+  color: #F5FAFF;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-tabular {
+  font-feature-settings: 'tnum';
+  font-variant-numeric: tabular-nums;
+}
+
+.glass-panel {
+  background: rgba(7, 27, 52, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 0 16px 0 rgba(34, 211, 238, 0.05);
+}
+
+.glass-card {
+  background: rgba(10, 77, 140, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(34, 211, 238, 0.15);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+}
+
+.cyan-glow {
+  text-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+}
+
+.cyan-border-glow {
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
