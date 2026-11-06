@@ -35,3 +35,4 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.12
+
