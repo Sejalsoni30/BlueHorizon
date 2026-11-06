@@ -52,6 +52,14 @@ export const PreferencesProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
 export const usePreferences = () => {
   const ctx = useContext(PreferencesContext);
-  if (!ctx) throw new Error('usePreferences must be used within a PreferencesProvider');
+  if (!ctx) {
+    return {
+      lowBandwidth: false,
+      setLowBandwidth: () => {},
+      toggleLowBandwidth: () => {},
+      prefersReducedMotion: false,
+    };
+  }
   return ctx;
 };
+
