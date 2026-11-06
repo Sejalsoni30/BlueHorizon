@@ -125,3 +125,4 @@ export const LiquidShaderPlane: React.FC<{ scrollProgress?: number }> = ({ scrol
     </mesh>
   );
 };
+

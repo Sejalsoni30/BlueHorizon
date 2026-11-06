@@ -68,3 +68,4 @@ export const StatementSection: React.FC = () => {
     </section>
   );
 };
+

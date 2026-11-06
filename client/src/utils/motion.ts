@@ -28,3 +28,4 @@ export const pageCurtainVariants = {
   animate: { scaleY: 0, originY: 0, transition: { duration: 0.65, ease: MOTION_CONFIG.ease } },
   exit: { scaleY: 1, originY: 1, transition: { duration: 0.5, ease: MOTION_CONFIG.ease } },
 };
+
