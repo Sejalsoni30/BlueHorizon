@@ -8,9 +8,9 @@ interface LoaderRingProps {
 export const LoaderRing: React.FC<LoaderRingProps> = ({ onComplete }) => {
   const [count, setCount] = useState(0);
   const [isFolding, setIsFolding] = useState(false);
+  const [curtainOpen, setCurtainOpen] = useState(false);
 
   useEffect(() => {
-    // Check reduced motion or previous session view
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const hasSeenLoader = sessionStorage.getItem('bh_loader_seen');
 
@@ -25,16 +25,21 @@ export const LoaderRing: React.FC<LoaderRingProps> = ({ onComplete }) => {
           clearInterval(interval);
           setIsFolding(true);
           sessionStorage.setItem('bh_loader_seen', 'true');
+
+          // Trigger curtain split after logo folds
           setTimeout(() => {
-            onComplete();
-          }, 800);
+            setCurtainOpen(true);
+            setTimeout(() => {
+              onComplete();
+            }, 600);
+          }, 500);
+
           return 100;
         }
-        // Smooth logarithmic pacing
-        const step = Math.max(1, Math.floor((100 - prev) * 0.12));
+        const step = Math.max(1, Math.floor((100 - prev) * 0.14));
         return Math.min(100, prev + step);
       });
-    }, 40);
+    }, 35);
 
     return () => clearInterval(interval);
   }, [onComplete]);
@@ -44,71 +49,82 @@ export const LoaderRing: React.FC<LoaderRingProps> = ({ onComplete }) => {
     onComplete();
   };
 
-  const strokeDash = 283; // 2 * pi * 45
+  const strokeDash = 283;
   const strokeOffset = strokeDash - (strokeDash * count) / 100;
 
   return (
-    <div
-      className={`fixed inset-0 z-[200] flex flex-col items-center justify-center bg-abyss transition-opacity duration-700 ${
-        isFolding ? 'opacity-0 pointer-events-none' : 'opacity-100'
-      }`}
-      role="progressbar"
-      aria-valuenow={count}
-      aria-valuemin={0}
-      aria-valuemax={100}
-    >
+    <div className="fixed inset-0 z-[200] overflow-hidden pointer-events-auto" role="progressbar" aria-valuenow={count} aria-valuemin={0} aria-valuemax={100}>
+      {/* Top Half Curtain */}
       <div
-        className={`relative flex items-center justify-center transition-all duration-700 ${
-          isFolding ? 'scale-50 rotate-180' : 'scale-100'
+        className={`absolute top-0 left-0 right-0 h-1/2 bg-obsidian transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] border-b border-mint/20 ${
+          curtainOpen ? '-translate-y-full' : 'translate-y-0'
+        }`}
+      />
+
+      {/* Bottom Half Curtain */}
+      <div
+        className={`absolute bottom-0 left-0 right-0 h-1/2 bg-obsidian transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] border-t border-mint/20 ${
+          curtainOpen ? 'translate-y-full' : 'translate-y-0'
+        }`}
+      />
+
+      {/* Center Ring & Counter */}
+      <div
+        className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-300 ${
+          curtainOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
       >
-        <svg className="w-32 h-32 -rotate-90 transform" viewBox="0 0 100 100">
-          <circle
-            cx="50"
-            cy="50"
-            r="45"
-            className="text-deep stroke-current"
-            strokeWidth="3"
-            fill="transparent"
-          />
-          <circle
-            cx="50"
-            cy="50"
-            r="45"
-            className="text-cyan stroke-current transition-all duration-75 ease-out"
-            strokeWidth="3.5"
-            strokeDasharray={strokeDash}
-            strokeDashoffset={strokeOffset}
-            strokeLinecap="round"
-            fill="transparent"
-            style={{ filter: 'drop-shadow(0 0 8px #22D3EE)' }}
-          />
-        </svg>
-
-        {/* Center content / logo icon */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-          {isFolding ? (
-            <Waves className="w-8 h-8 text-cyan animate-pulse" />
-          ) : (
-            <span className="font-display font-semibold text-lg text-offwhite font-tabular">
-              {count}%
-            </span>
-          )}
-        </div>
-      </div>
-
-      <div className="mt-6 flex flex-col items-center gap-3">
-        <span className="text-xs uppercase tracking-widest text-offwhite/50 font-display">
-          Initializing Environmental Intelligence...
-        </span>
-        <button
-          onClick={handleSkip}
-          className="text-xs text-cyan/70 hover:text-cyan underline underline-offset-4 transition-colors"
+        <div
+          className={`relative flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            isFolding ? 'scale-75 rotate-180' : 'scale-100'
+          }`}
         >
-          Skip Intro
-        </button>
+          <svg className="w-28 h-28 -rotate-90 transform" viewBox="0 0 100 100">
+            <circle
+              cx="50"
+              cy="50"
+              r="45"
+              className="text-graphite stroke-current"
+              strokeWidth="2.5"
+              fill="transparent"
+            />
+            <circle
+              cx="50"
+              cy="50"
+              r="45"
+              className="text-mint stroke-current transition-all duration-75 ease-out"
+              strokeWidth="3"
+              strokeDasharray={strokeDash}
+              strokeDashoffset={strokeOffset}
+              strokeLinecap="round"
+              fill="transparent"
+              style={{ filter: 'drop-shadow(0 0 10px rgba(92, 255, 177, 0.7))' }}
+            />
+          </svg>
+
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+            {isFolding ? (
+              <Waves className="w-7 h-7 text-mint animate-pulse" />
+            ) : (
+              <span className="font-mono font-bold text-base text-bone font-tabular">
+                {count}%
+              </span>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-6 flex flex-col items-center gap-2.5">
+          <span className="text-[11px] uppercase tracking-widest text-ash font-mono">
+            Calibrating Environmental Intelligence...
+          </span>
+          <button
+            onClick={handleSkip}
+            className="text-[11px] font-mono text-mint hover:underline underline-offset-4 transition-colors"
+          >
+            Skip [Esc]
+          </button>
+        </div>
       </div>
     </div>
   );
 };
-

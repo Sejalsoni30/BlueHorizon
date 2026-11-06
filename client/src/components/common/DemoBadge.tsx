@@ -11,12 +11,11 @@ export const DemoBadge: React.FC<DemoBadgeProps> = ({ className = '' }) => {
 
   return (
     <span
-      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono tracking-wide border border-cyan/30 bg-ocean/30 text-cyan ${className}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono tracking-wide border border-graphite bg-carbon/90 text-ash ${className}`}
       title="This dataset or calculation uses demonstration/benchmark data"
     >
-      <Database className="w-3 h-3 text-cyan" />
+      <Database className="w-3 h-3 text-mint" />
       <span>{t('demoDataBadge', 'Demonstration data')}</span>
     </span>
   );
 };
-

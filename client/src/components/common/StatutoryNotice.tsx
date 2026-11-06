@@ -12,18 +12,17 @@ export const StatutoryNotice: React.FC<StatutoryNoticeProps> = ({ className = ''
 
   return (
     <div
-      className={`rounded-lg border border-cyan/20 bg-deep/60 backdrop-blur-sm text-offwhite/80 ${
-        compact ? 'p-2 text-xs' : 'p-3 text-xs md:text-sm'
-      } flex items-start gap-2.5 ${className}`}
+      className={`rounded-xl border border-graphite bg-carbon/75 backdrop-blur-md text-bone/80 ${
+        compact ? 'p-2 text-xs' : 'p-3.5 text-xs md:text-sm'
+      } flex items-start gap-3 shadow-carbon-elevation ${className}`}
       role="note"
       aria-label="Statutory Safety Notice"
     >
-      <Info className="w-4 h-4 text-cyan flex-shrink-0 mt-0.5" aria-hidden="true" />
-      <p className="leading-relaxed">
-        <strong className="text-cyan font-medium">Notice: </strong>
+      <Info className="w-4 h-4 text-mint flex-shrink-0 mt-0.5" aria-hidden="true" />
+      <p className="leading-relaxed text-ash">
+        <strong className="text-bone font-semibold">Notice: </strong>
         {t('statutoryNotice', 'Complements, does not replace, official warnings. Follow IMD, CWC, NDMA and your State Disaster Management Authority.')}
       </p>
     </div>
   );
 };
-

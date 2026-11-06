@@ -91,78 +91,85 @@ const platforms: PlatformRow[] = [
 
 export const CompetitorComparisonSection: React.FC = () => {
   const renderIcon = (val: boolean | 'partial') => {
-    if (val === true) return <Check className="w-4 h-4 text-emerald-400 mx-auto" />;
-    if (val === 'partial') return <span className="text-[11px] font-medium text-amber-400 font-mono">Partial</span>;
-    return <Minus className="w-4 h-4 text-offwhite/20 mx-auto" />;
+    if (val === true) return <Check className="w-4 h-4 text-mint mx-auto" />;
+    if (val === 'partial') return <span className="text-[11px] font-bold text-[#FFD166] font-mono">Partial</span>;
+    return <Minus className="w-4 h-4 text-ash/30 mx-auto" />;
   };
 
   return (
-    <section className="w-full py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <section className="w-full py-24 sm:py-32 bg-obsidian border-b border-graphite">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        
+        {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-cyan/30 bg-deep/60 text-cyan text-xs">
-            Evidence-Based Platform Analysis
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-graphite bg-carbon text-ash text-xs font-mono">
+            06 // Evidence-Based Platform Analysis
           </div>
-          <h2 className="text-2xl sm:text-3xl font-display font-bold text-offwhite">
-            Benchmarking Official Systems & Research Gaps
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-bone tracking-tight">
+            Benchmarking Official Systems & <span className="text-mint">Research Gaps</span>
           </h2>
-          <p className="text-xs sm:text-sm text-offwhite/70 leading-relaxed">
+          <p className="text-xs sm:text-sm text-ash leading-relaxed">
             Existing government and research platforms excel in specialized hydro-meteorological modeling. BlueHorizon sits downstream, solving the communication, telemetry health, and household actionability bottlenecks.
           </p>
         </div>
 
         {/* Accessible Table Container */}
-        <div className="overflow-x-auto rounded-xl border border-cyan/20 glass-panel">
+        <div className="overflow-x-auto rounded-3xl border border-graphite glass-panel p-2">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="border-b border-cyan/20 bg-ocean/20 text-offwhite font-medium">
-                <th scope="col" className="p-3.5 sm:p-4">Platform & Agency</th>
-                <th scope="col" className="p-3.5 sm:p-4 text-center">Flood Forecast</th>
-                <th scope="col" className="p-3.5 sm:p-4 text-center">Drought Monitor</th>
-                <th scope="col" className="p-3.5 sm:p-4 text-center">Uncertainty Bounds</th>
-                <th scope="col" className="p-3.5 sm:p-4 text-center">Telemetry Health Flag</th>
-                <th scope="col" className="p-3.5 sm:p-4 text-center">Explainable 'Why'</th>
-                <th scope="col" className="p-3.5 sm:p-4 text-center">Tailored Action Plan</th>
+              <tr className="border-b border-graphite bg-carbon text-bone font-mono text-[11px] uppercase tracking-wider">
+                <th scope="col" className="p-4">Platform & Agency</th>
+                <th scope="col" className="p-4 text-center">Flood Forecast</th>
+                <th scope="col" className="p-4 text-center">Drought Monitor</th>
+                <th scope="col" className="p-4 text-center">Uncertainty Bounds</th>
+                <th scope="col" className="p-4 text-center">Telemetry Health Flag</th>
+                <th scope="col" className="p-4 text-center">Explainable 'Why'</th>
+                <th scope="col" className="p-4 text-center">Tailored Action Plan</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-cyan/10">
-              {platforms.map((p) => (
-                <tr
-                  key={p.name}
-                  className={`${
-                    p.name.includes('BlueHorizon')
-                      ? 'bg-cyan-dim/40 font-semibold border-t-2 border-cyan/40'
-                      : 'hover:bg-deep/40 transition-colors'
-                  }`}
-                >
-                  <td className="p-3.5 sm:p-4">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-offwhite font-medium">{p.name}</span>
-                      <a
-                        href={p.sourceUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-cyan/70 hover:text-cyan"
-                        title="View Official Source"
-                      >
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    </div>
-                    <span className="text-[11px] text-offwhite/50 block">{p.agency}</span>
-                  </td>
-                  <td className="p-3.5 sm:p-4 text-center">{renderIcon(p.flood)}</td>
-                  <td className="p-3.5 sm:p-4 text-center">{renderIcon(p.drought)}</td>
-                  <td className="p-3.5 sm:p-4 text-center">{renderIcon(p.uncertainty)}</td>
-                  <td className="p-3.5 sm:p-4 text-center">{renderIcon(p.telemetryHealth)}</td>
-                  <td className="p-3.5 sm:p-4 text-center">{renderIcon(p.hyperlocalWhy)}</td>
-                  <td className="p-3.5 sm:p-4 text-center">{renderIcon(p.preparedness)}</td>
-                </tr>
-              ))}
+            <tbody className="divide-y divide-graphite">
+              {platforms.map((p) => {
+                const isBh = p.name.includes('BlueHorizon');
+                return (
+                  <tr
+                    key={p.name}
+                    className={`${
+                      isBh
+                        ? 'bg-mint/5 font-semibold border-t-2 border-mint/40'
+                        : 'hover:bg-carbon/60 transition-colors'
+                    }`}
+                  >
+                    <td className="p-4">
+                      <div className="flex items-center gap-1.5">
+                        <span className={isBh ? 'text-mint font-bold' : 'text-bone font-medium'}>
+                          {p.name}
+                        </span>
+                        <a
+                          href={p.sourceUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-ash/60 hover:text-mint transition-colors"
+                          title="View Official Source"
+                        >
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+                      <span className="text-[11px] text-ash/70 block font-mono mt-0.5">{p.agency}</span>
+                    </td>
+                    <td className="p-4 text-center">{renderIcon(p.flood)}</td>
+                    <td className="p-4 text-center">{renderIcon(p.drought)}</td>
+                    <td className="p-4 text-center">{renderIcon(p.uncertainty)}</td>
+                    <td className="p-4 text-center">{renderIcon(p.telemetryHealth)}</td>
+                    <td className="p-4 text-center">{renderIcon(p.hyperlocalWhy)}</td>
+                    <td className="p-4 text-center">{renderIcon(p.preparedness)}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
 
-        <p className="text-[11px] text-offwhite/50 text-center">
+        <p className="text-[11px] text-ash/60 text-center font-mono">
           * Sources cited from official publications (CWC, NDMA, IITGN, Google Research). Audited November 2026.
         </p>
       </div>

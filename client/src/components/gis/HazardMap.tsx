@@ -5,22 +5,21 @@ import L from 'leaflet';
 import { Layers, ShieldCheck, Droplet, Sun, Table, Map } from 'lucide-react';
 import { RiskBadge } from '../common/RiskBadge';
 
-// Fix standard Leaflet default icon issues in bundler environments
 const floodIcon = new L.DivIcon({
   className: 'custom-pin-flood',
-  html: '<div style="background:#22D3EE; width:14px; height:14px; border-radius:50%; border:2px solid #071B34; box-shadow:0 0 10px #22D3EE;"></div>',
+  html: '<div style="background:#5CFFB1; width:14px; height:14px; border-radius:50%; border:2px solid #060606; box-shadow:0 0 12px #5CFFB1;"></div>',
   iconSize: [14, 14],
 });
 
 const droughtIcon = new L.DivIcon({
   className: 'custom-pin-drought',
-  html: '<div style="background:#F59E0B; width:14px; height:14px; border-radius:50%; border:2px solid #071B34; box-shadow:0 0 10px #F59E0B;"></div>',
+  html: '<div style="background:#FF7A2F; width:14px; height:14px; border-radius:50%; border:2px solid #060606; box-shadow:0 0 12px #FF7A2F;"></div>',
   iconSize: [14, 14],
 });
 
 const reportIcon = new L.DivIcon({
   className: 'custom-pin-report',
-  html: '<div style="background:#10B981; width:12px; height:12px; border-radius:50%; border:2px solid #071B34; box-shadow:0 0 8px #10B981;"></div>',
+  html: '<div style="background:#F4F1EA; width:12px; height:12px; border-radius:50%; border:2px solid #060606; box-shadow:0 0 8px #F4F1EA;"></div>',
   iconSize: [12, 12],
 });
 
@@ -56,39 +55,39 @@ export const HazardMap: React.FC = () => {
   });
 
   return (
-    <div className="glass-panel p-6 rounded-2xl border border-cyan/20 space-y-4">
+    <div className="glass-panel p-6 sm:p-7 rounded-3xl border border-graphite space-y-4">
       {/* Header and Controls */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-cyan/15">
-        <div className="flex items-center gap-2">
-          <Layers className="w-4 h-4 text-cyan" />
-          <h3 className="font-display font-semibold text-sm sm:text-base text-offwhite">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-graphite">
+        <div className="flex items-center gap-2.5">
+          <Layers className="w-4 h-4 text-mint" />
+          <h3 className="font-display font-bold text-base text-bone">
             Geospatial Environmental Hazard Canvas
           </h3>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           {/* Toggles */}
-          <div className="flex rounded-lg bg-deep border border-cyan/20 p-0.5 text-xs">
+          <div className="flex rounded-xl bg-carbon border border-graphite p-1 text-xs font-mono">
             <button
               onClick={() => setShowFlood(!showFlood)}
-              className={`px-2.5 py-1 rounded flex items-center gap-1 transition-colors ${
-                showFlood ? 'bg-cyan text-abyss font-semibold' : 'text-offwhite/50 hover:text-cyan'
+              className={`px-3 py-1 rounded-lg flex items-center gap-1.5 transition-colors ${
+                showFlood ? 'bg-mint text-obsidian font-bold' : 'text-ash hover:text-mint'
               }`}
             >
               <Droplet className="w-3 h-3" /> Flood
             </button>
             <button
               onClick={() => setShowDrought(!showDrought)}
-              className={`px-2.5 py-1 rounded flex items-center gap-1 transition-colors ${
-                showDrought ? 'bg-amber-400 text-abyss font-semibold' : 'text-offwhite/50 hover:text-amber-400'
+              className={`px-3 py-1 rounded-lg flex items-center gap-1.5 transition-colors ${
+                showDrought ? 'bg-ember text-obsidian font-bold' : 'text-ash hover:text-ember'
               }`}
             >
               <Sun className="w-3 h-3" /> Drought
             </button>
             <button
               onClick={() => setShowReports(!showReports)}
-              className={`px-2.5 py-1 rounded flex items-center gap-1 transition-colors ${
-                showReports ? 'bg-emerald-400 text-abyss font-semibold' : 'text-offwhite/50 hover:text-emerald-400'
+              className={`px-3 py-1 rounded-lg flex items-center gap-1.5 transition-colors ${
+                showReports ? 'bg-bone text-obsidian font-bold' : 'text-ash hover:text-bone'
               }`}
             >
               <ShieldCheck className="w-3 h-3" /> Reports
@@ -97,7 +96,7 @@ export const HazardMap: React.FC = () => {
 
           <button
             onClick={() => setShowTableAlt(!showTableAlt)}
-            className="p-1.5 rounded-lg bg-deep border border-cyan/20 text-cyan hover:border-cyan/50 text-xs flex items-center gap-1"
+            className="p-2 rounded-xl bg-carbon border border-graphite text-ash hover:text-mint hover:border-mint/30 text-xs flex items-center gap-1.5 transition-colors font-mono"
             title="Toggle Accessible Table View"
           >
             {showTableAlt ? <Map className="w-3.5 h-3.5" /> : <Table className="w-3.5 h-3.5" />}
@@ -108,11 +107,11 @@ export const HazardMap: React.FC = () => {
 
       {/* Accessible Table Alternative (WCAG 2.2 AA) */}
       {showTableAlt ? (
-        <div className="overflow-x-auto rounded-lg border border-cyan/20">
+        <div className="overflow-x-auto rounded-2xl border border-graphite">
           <table className="w-full text-xs text-left">
             <caption className="sr-only">Geographic Hazard Monitoring Stations & Community Ground Reports</caption>
             <thead>
-              <tr className="bg-ocean/20 text-offwhite border-b border-cyan/20">
+              <tr className="bg-carbon text-bone border-b border-graphite font-mono text-[11px]">
                 <th scope="col" className="p-3">Location / Station</th>
                 <th scope="col" className="p-3">Hazard Type</th>
                 <th scope="col" className="p-3">Status</th>
@@ -120,18 +119,18 @@ export const HazardMap: React.FC = () => {
                 <th scope="col" className="p-3">Telemetry / Ground Details</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-cyan/10">
+            <tbody className="divide-y divide-graphite font-mono">
               {filteredItems.map((item) => (
-                <tr key={item.id} className="hover:bg-deep/50">
-                  <td className="p-3 text-offwhite font-medium">{item.name}</td>
-                  <td className="p-3 uppercase font-mono text-[11px] text-cyan">{item.type}</td>
+                <tr key={item.id} className="hover:bg-carbon/60 transition-colors">
+                  <td className="p-3 text-bone font-medium">{item.name}</td>
+                  <td className="p-3 uppercase text-[11px] text-mint">{item.type}</td>
                   <td className="p-3">
                     <RiskBadge level={item.status === 'High' ? 'High' : item.status === 'Elevated' ? 'Elevated' : 'Watch'} />
                   </td>
-                  <td className="p-3 font-mono text-offwhite/70 font-tabular">
+                  <td className="p-3 text-ash font-tabular">
                     {item.lat.toFixed(4)}, {item.lng.toFixed(4)}
                   </td>
-                  <td className="p-3 text-offwhite/80">{item.details}</td>
+                  <td className="p-3 text-ash">{item.details}</td>
                 </tr>
               ))}
             </tbody>
@@ -139,16 +138,16 @@ export const HazardMap: React.FC = () => {
         </div>
       ) : (
         /* Leaflet Web-GIS Map */
-        <div className="w-full h-80 sm:h-96 rounded-xl overflow-hidden border border-cyan/20 relative z-0">
+        <div className="w-full h-80 sm:h-96 rounded-2xl overflow-hidden border border-graphite relative z-0">
           <MapContainer
             center={[18.8, 75.5]}
             zoom={6}
-            style={{ width: '100%', height: '100%', background: '#04101F' }}
+            style={{ width: '100%', height: '100%', background: '#060606' }}
             scrollWheelZoom={false}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
             />
 
             {filteredItems.map((item) => {
@@ -158,12 +157,12 @@ export const HazardMap: React.FC = () => {
                 <React.Fragment key={item.id}>
                   <Marker position={[item.lat, item.lng]} icon={icon}>
                     <Popup className="bluehorizon-popup">
-                      <div className="p-2 space-y-1 text-xs">
-                        <strong className="block text-sm text-offwhite">{item.name}</strong>
-                        <span className="text-[11px] text-cyan uppercase font-mono block">
+                      <div className="p-2 space-y-1 text-xs font-mono">
+                        <strong className="block text-sm text-bone">{item.name}</strong>
+                        <span className="text-[11px] text-mint uppercase block font-semibold">
                           Type: {item.type} ({item.status})
                         </span>
-                        <p className="text-offwhite/80">{item.details}</p>
+                        <p className="text-ash">{item.details}</p>
                       </div>
                     </Popup>
                   </Marker>
@@ -171,14 +170,14 @@ export const HazardMap: React.FC = () => {
                     <Circle
                       center={[item.lat, item.lng]}
                       radius={25000}
-                      pathOptions={{ color: '#22D3EE', fillColor: '#22D3EE', fillOpacity: 0.15, weight: 1.5 }}
+                      pathOptions={{ color: '#5CFFB1', fillColor: '#5CFFB1', fillOpacity: 0.12, weight: 1.5 }}
                     />
                   )}
                   {item.type === 'drought' && (
                     <Circle
                       center={[item.lat, item.lng]}
                       radius={40000}
-                      pathOptions={{ color: '#F59E0B', fillColor: '#F59E0B', fillOpacity: 0.1, weight: 1 }}
+                      pathOptions={{ color: '#FF7A2F', fillColor: '#FF7A2F', fillOpacity: 0.1, weight: 1 }}
                     />
                   )}
                 </React.Fragment>
@@ -188,11 +187,10 @@ export const HazardMap: React.FC = () => {
         </div>
       )}
 
-      <div className="flex flex-wrap items-center justify-between text-[11px] text-offwhite/50 pt-2 border-t border-cyan/10">
-        <span>Cartography by OpenStreetMap (ODbL 1.0). Station geometry via CWC & India-WRIS.</span>
-        <span className="font-mono text-cyan">Leaflet GIS Engine</span>
+      <div className="flex flex-wrap items-center justify-between text-[11px] text-ash/60 pt-2 border-t border-graphite font-mono">
+        <span>Cartography by OpenStreetMap (ODbL 1.0) & CartoDB Dark Matter.</span>
+        <span className="text-mint">Leaflet GIS Engine</span>
       </div>
     </div>
   );
 };
-

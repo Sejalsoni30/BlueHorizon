@@ -100,30 +100,30 @@ export const AuthPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-abyss text-offwhite flex flex-col justify-between">
+    <div className="min-h-screen bg-obsidian text-bone flex flex-col justify-between">
       <Navbar />
 
       <main className="flex-1 max-w-md w-full mx-auto px-4 py-12 flex flex-col justify-center">
-        <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-cyan/20 shadow-2xl space-y-6">
+        <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-graphite shadow-2xl space-y-6">
           {/* Header */}
           <div className="text-center space-y-2">
-            <div className="w-12 h-12 rounded-full border border-cyan/40 bg-deep flex items-center justify-center mx-auto text-cyan cyan-border-glow">
+            <div className="w-12 h-12 rounded-full border border-mint/40 bg-carbon flex items-center justify-center mx-auto text-mint shadow-[0_0_20px_rgba(92,255,177,0.25)]">
               <Shield className="w-6 h-6" />
             </div>
-            <h1 className="text-xl sm:text-2xl font-display font-bold text-offwhite">
+            <h1 className="text-xl sm:text-2xl font-display font-bold text-bone">
               {tab === 'login' ? 'Access Intelligence Layer' : 'Create BlueHorizon Account'}
             </h1>
-            <p className="text-xs text-offwhite/60">
+            <p className="text-xs text-ash">
               Role-based access for citizens, verified field responders, and administrators.
             </p>
           </div>
 
           {/* Tab Switcher */}
-          <div className="grid grid-cols-2 p-1 rounded-lg bg-deep border border-cyan/15 text-xs font-medium">
+          <div className="grid grid-cols-2 p-1 rounded-lg bg-carbon border border-graphite text-xs font-medium">
             <button
               onClick={() => { setTab('login'); setError(null); }}
               className={`py-2 rounded-md transition-all ${
-                tab === 'login' ? 'bg-cyan text-abyss font-bold shadow' : 'text-offwhite/70 hover:text-cyan'
+                tab === 'login' ? 'bg-mint text-obsidian font-bold shadow' : 'text-ash hover:text-mint'
               }`}
             >
               Sign In
@@ -131,7 +131,7 @@ export const AuthPage: React.FC = () => {
             <button
               onClick={() => { setTab('register'); setError(null); }}
               className={`py-2 rounded-md transition-all ${
-                tab === 'register' ? 'bg-cyan text-abyss font-bold shadow' : 'text-offwhite/70 hover:text-cyan'
+                tab === 'register' ? 'bg-mint text-obsidian font-bold shadow' : 'text-ash hover:text-mint'
               }`}
             >
               Register
@@ -149,54 +149,54 @@ export const AuthPage: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {tab === 'register' && (
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-offwhite/80">Full Name</label>
+                <label className="text-xs font-medium text-ash">Full Name</label>
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Ramesh Kulkarni"
-                  className="w-full px-3 py-2 rounded-lg bg-deep/80 border border-cyan/20 text-xs text-offwhite placeholder:text-offwhite/30 focus:border-cyan focus:outline-none"
+                  className="w-full px-3 py-2 rounded-lg bg-carbon border border-graphite text-xs text-bone placeholder:text-ash/40 focus:border-mint focus:outline-none"
                 />
               </div>
             )}
 
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-offwhite/80">Email Address</label>
+              <label className="text-xs font-medium text-ash">Email Address</label>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@example.org"
-                className="w-full px-3 py-2 rounded-lg bg-deep/80 border border-cyan/20 text-xs text-offwhite placeholder:text-offwhite/30 focus:border-cyan focus:outline-none"
+                className="w-full px-3 py-2 rounded-lg bg-carbon border border-graphite text-xs text-bone placeholder:text-ash/40 focus:border-mint focus:outline-none"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-offwhite/80">Password</label>
+              <label className="text-xs font-medium text-ash">Password</label>
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-3 py-2 rounded-lg bg-deep/80 border border-cyan/20 text-xs text-offwhite placeholder:text-offwhite/30 focus:border-cyan focus:outline-none"
+                className="w-full px-3 py-2 rounded-lg bg-carbon border border-graphite text-xs text-bone placeholder:text-ash/40 focus:border-mint focus:outline-none"
               />
             </div>
 
             {/* Password Strength Checklist for Register */}
             {tab === 'register' && (
-              <div className="p-2.5 rounded-lg bg-deep/50 border border-cyan/10 space-y-1.5 text-[11px]">
-                <span className="text-offwhite/50 block font-mono">Password Requirements:</span>
+              <div className="p-2.5 rounded-lg bg-carbon/50 border border-graphite space-y-1.5 text-[11px]">
+                <span className="text-ash block font-mono">Password Requirements:</span>
                 <div className="grid grid-cols-3 gap-1">
-                  <span className={`flex items-center gap-1 ${hasMinLength ? 'text-emerald-400' : 'text-offwhite/40'}`}>
+                  <span className={`flex items-center gap-1 ${hasMinLength ? 'text-mint' : 'text-ash/40'}`}>
                     <CheckCircle className="w-3 h-3" /> 8+ chars
                   </span>
-                  <span className={`flex items-center gap-1 ${hasUpper ? 'text-emerald-400' : 'text-offwhite/40'}`}>
+                  <span className={`flex items-center gap-1 ${hasUpper ? 'text-mint' : 'text-ash/40'}`}>
                     <CheckCircle className="w-3 h-3" /> 1 Uppercase
                   </span>
-                  <span className={`flex items-center gap-1 ${hasNumber ? 'text-emerald-400' : 'text-offwhite/40'}`}>
+                  <span className={`flex items-center gap-1 ${hasNumber ? 'text-mint' : 'text-ash/40'}`}>
                     <CheckCircle className="w-3 h-3" /> 1 Number
                   </span>
                 </div>
@@ -206,11 +206,11 @@ export const AuthPage: React.FC = () => {
             {/* Role Selector */}
             {tab === 'register' && (
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-offwhite/80">Operational Role</label>
+                <label className="text-xs font-medium text-ash">Operational Role</label>
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value as UserRole)}
-                  className="w-full px-3 py-2 rounded-lg bg-deep border border-cyan/20 text-xs text-offwhite focus:border-cyan focus:outline-none"
+                  className="w-full px-3 py-2 rounded-lg bg-carbon border border-graphite text-xs text-bone focus:border-mint focus:outline-none"
                 >
                   <option value="citizen">Citizen / Resident</option>
                   <option value="volunteer">Volunteer Responder (Ground Verification)</option>
@@ -222,7 +222,7 @@ export const AuthPage: React.FC = () => {
             {/* Admin Verification Code */}
             {tab === 'register' && role === 'admin' && (
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-cyan flex items-center gap-1">
+                <label className="text-xs font-medium text-mint flex items-center gap-1">
                   <KeyRound className="w-3 h-3" /> Admin Invite Passcode
                 </label>
                 <input
@@ -231,7 +231,7 @@ export const AuthPage: React.FC = () => {
                   value={adminCode}
                   onChange={(e) => setAdminCode(e.target.value)}
                   placeholder="Enter BLUEHORIZON_ADMIN_2026"
-                  className="w-full px-3 py-2 rounded-lg bg-deep/80 border border-cyan/40 text-xs text-cyan placeholder:text-offwhite/30 focus:border-cyan focus:outline-none font-mono"
+                  className="w-full px-3 py-2 rounded-lg bg-carbon border border-graphite text-xs text-mint placeholder:text-ash/40 focus:border-mint focus:outline-none font-mono"
                 />
               </div>
             )}
@@ -239,7 +239,7 @@ export const AuthPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-lg bg-cyan text-abyss font-bold text-xs sm:text-sm hover:bg-cyan/90 transition-all flex items-center justify-center gap-2 cyan-border-glow disabled:opacity-50"
+              className="w-full py-2.5 rounded-lg bg-mint text-obsidian font-bold text-xs sm:text-sm hover:bg-mint/90 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(92,255,177,0.3)] disabled:opacity-50"
             >
               <UserCheck className="w-4 h-4" />
               <span>{loading ? 'Authenticating...' : tab === 'login' ? 'Sign In' : 'Create Account'}</span>
@@ -247,29 +247,29 @@ export const AuthPage: React.FC = () => {
           </form>
 
           {/* Fast Demo Fill Credentials */}
-          <div className="pt-4 border-t border-cyan/15 space-y-2">
-            <span className="text-[11px] font-mono text-offwhite/50 block text-center">
+          <div className="pt-4 border-t border-graphite space-y-2">
+            <span className="text-[11px] font-mono text-ash block text-center">
               Quick Evaluation Credentials:
             </span>
             <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
                 onClick={() => fillQuickDemo('citizen')}
-                className="py-1 px-2 rounded bg-deep hover:bg-ocean/30 border border-cyan/20 text-[10px] text-offwhite/80 transition-colors"
+                className="py-1 px-2 rounded bg-carbon hover:bg-graphite border border-graphite text-[10px] text-ash hover:text-bone transition-colors"
               >
                 Citizen
               </button>
               <button
                 type="button"
                 onClick={() => fillQuickDemo('volunteer')}
-                className="py-1 px-2 rounded bg-deep hover:bg-ocean/30 border border-teal/30 text-[10px] text-teal transition-colors"
+                className="py-1 px-2 rounded bg-carbon hover:bg-graphite border border-graphite text-[10px] text-mint transition-colors"
               >
                 Volunteer
               </button>
               <button
                 type="button"
                 onClick={() => fillQuickDemo('admin')}
-                className="py-1 px-2 rounded bg-deep hover:bg-ocean/30 border border-amber-500/30 text-[10px] text-amber-300 transition-colors"
+                className="py-1 px-2 rounded bg-carbon hover:bg-graphite border border-graphite text-[10px] text-amber-300 transition-colors"
               >
                 Admin
               </button>

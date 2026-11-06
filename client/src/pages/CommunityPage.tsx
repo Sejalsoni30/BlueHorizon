@@ -206,20 +206,20 @@ export const CommunityPage: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen bg-abyss text-offwhite flex flex-col justify-between">
+    <div className="min-h-screen bg-obsidian text-bone flex flex-col justify-between">
       <Navbar />
 
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-6 flex-1">
         {/* Header */}
-        <div className="pb-4 border-b border-cyan/20">
-          <div className="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-mono mb-1">
+        <div className="pb-4 border-b border-graphite">
+          <div className="inline-flex items-center gap-1.5 text-xs text-mint font-mono mb-1">
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>Volunteered Geographic Information (VGI) Pipeline</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-bold text-offwhite">
+          <h1 className="text-2xl sm:text-3xl font-display font-bold text-bone">
             Community Ground Verification Feed
           </h1>
-          <p className="text-xs sm:text-sm text-offwhite/60">
+          <p className="text-xs sm:text-sm text-ash">
             Submit on-the-ground hazard observations. Reports undergo automated GPS cluster deduplication and field verification by registered volunteers and emergency administrators.
           </p>
         </div>
@@ -228,24 +228,24 @@ export const CommunityPage: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Submission Form Column */}
-          <div className="lg:col-span-5 glass-panel p-6 rounded-2xl border border-cyan/20 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-cyan/15">
-              <h3 className="font-semibold text-sm text-offwhite flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-cyan" /> Submit Ground Observation
+          <div className="lg:col-span-5 glass-panel p-6 rounded-2xl border border-graphite space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-graphite">
+              <h3 className="font-semibold text-sm text-bone flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-mint" /> Submit Ground Observation
               </h3>
-              <span className="text-[11px] text-cyan font-mono">Role: {user?.role || 'Citizen'}</span>
+              <span className="text-[11px] text-mint font-mono">Role: {user?.role || 'Citizen'}</span>
             </div>
 
             {msg && (
               <div
                 className={`p-3 rounded-lg text-xs flex items-start gap-2 ${
                   msg.type === 'success'
-                    ? 'bg-emerald-950/60 border border-emerald-500/40 text-emerald-300'
+                    ? 'bg-mint/10 border border-mint/40 text-mint'
                     : 'bg-rose-950/60 border border-rose-500/40 text-rose-300'
                 }`}
               >
                 {msg.type === 'success' ? (
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-mint flex-shrink-0 mt-0.5" />
                 ) : (
                   <AlertCircle className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
                 )}
@@ -255,11 +255,11 @@ export const CommunityPage: React.FC = () => {
 
             <form onSubmit={handleSubmit} className="space-y-3.5 text-xs">
               <div className="space-y-1">
-                <label className="text-offwhite/80 font-medium">Hazard Incident Type</label>
+                <label className="text-ash font-medium">Hazard Incident Type</label>
                 <select
                   value={reportType}
                   onChange={(e) => setReportType(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-deep border border-cyan/20 text-offwhite focus:border-cyan focus:outline-none"
+                  className="w-full px-3 py-2 rounded-lg bg-carbon border border-graphite text-bone focus:border-mint focus:outline-none"
                 >
                   <option value="inundation">Overland / Street Inundation</option>
                   <option value="embankment_breach">River Embankment Scour / Breach</option>
@@ -270,49 +270,49 @@ export const CommunityPage: React.FC = () => {
               </div>
 
               <div className="space-y-1">
-                <label className="text-offwhite/80 font-medium">Incident Summary</label>
+                <label className="text-ash font-medium">Incident Summary</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Water overflowing causeway by 20cm"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-deep/80 border border-cyan/20 text-offwhite focus:border-cyan focus:outline-none placeholder:text-offwhite/30"
+                  className="w-full px-3 py-2 rounded-lg bg-carbon border border-graphite text-bone focus:border-mint focus:outline-none placeholder:text-ash/40"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-offwhite/80 font-medium">Detailed Observation</label>
+                <label className="text-ash font-medium">Detailed Observation</label>
                 <textarea
                   rows={3}
                   required
                   placeholder="Note water velocity, affected roads, or agricultural impacts..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-deep/80 border border-cyan/20 text-offwhite focus:border-cyan focus:outline-none placeholder:text-offwhite/30"
+                  className="w-full px-3 py-2 rounded-lg bg-carbon border border-graphite text-bone focus:border-mint focus:outline-none placeholder:text-ash/40"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="text-offwhite/80 font-medium">District</label>
+                  <label className="text-ash font-medium">District</label>
                   <input
                     type="text"
                     required
                     value={district}
                     onChange={(e) => setDistrict(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg bg-deep/80 border border-cyan/20 text-offwhite focus:border-cyan focus:outline-none"
+                    className="w-full px-3 py-2 rounded-lg bg-carbon border border-graphite text-bone focus:border-mint focus:outline-none"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-offwhite/80 font-medium">Water Depth (cm, if flood)</label>
+                  <label className="text-ash font-medium">Water Depth (cm, if flood)</label>
                   <input
                     type="number"
                     min="0"
                     placeholder="e.g. 25"
                     value={waterDepthCm}
                     onChange={(e) => setWaterDepthCm(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="w-full px-3 py-2 rounded-lg bg-deep/80 border border-cyan/20 text-offwhite focus:border-cyan focus:outline-none font-mono"
+                    className="w-full px-3 py-2 rounded-lg bg-carbon border border-graphite text-bone focus:border-mint focus:outline-none font-mono"
                   />
                 </div>
               </div>
@@ -320,11 +320,11 @@ export const CommunityPage: React.FC = () => {
               {/* GPS Coordinates & Lock */}
               <div className="space-y-1">
                 <div className="flex justify-between items-center">
-                  <label className="text-offwhite/80 font-medium">Coordinates (Lat, Lng)</label>
+                  <label className="text-ash font-medium">Coordinates (Lat, Lng)</label>
                   <button
                     type="button"
                     onClick={handleGetLocation}
-                    className="text-cyan hover:underline flex items-center gap-1 text-[11px]"
+                    className="text-mint hover:underline flex items-center gap-1 text-[11px]"
                   >
                     <Navigation className="w-3 h-3" /> Use My GPS
                   </button>
@@ -335,14 +335,14 @@ export const CommunityPage: React.FC = () => {
                     step="0.0001"
                     value={lat}
                     onChange={(e) => setLat(Number(e.target.value))}
-                    className="px-2.5 py-1.5 rounded bg-deep border border-cyan/20 text-offwhite"
+                    className="px-2.5 py-1.5 rounded bg-carbon border border-graphite text-bone focus:border-mint focus:outline-none"
                   />
                   <input
                     type="number"
                     step="0.0001"
                     value={lng}
                     onChange={(e) => setLng(Number(e.target.value))}
-                    className="px-2.5 py-1.5 rounded bg-deep border border-cyan/20 text-offwhite"
+                    className="px-2.5 py-1.5 rounded bg-carbon border border-graphite text-bone focus:border-mint focus:outline-none"
                   />
                 </div>
               </div>
@@ -350,7 +350,7 @@ export const CommunityPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-2.5 rounded-lg bg-cyan text-abyss font-bold hover:bg-cyan/90 transition-all flex items-center justify-center gap-2 cyan-border-glow disabled:opacity-50"
+                className="w-full py-2.5 rounded-lg bg-mint text-obsidian font-bold hover:bg-mint/90 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(92,255,177,0.3)] disabled:opacity-50"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>{submitting ? 'Submitting...' : 'Submit Ground Report'}</span>
@@ -360,21 +360,21 @@ export const CommunityPage: React.FC = () => {
 
           {/* Verification Feed Column */}
           <div className="lg:col-span-7 space-y-4">
-            <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-cyan/15">
-              <h3 className="font-semibold text-sm text-offwhite">
+            <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-graphite">
+              <h3 className="font-semibold text-sm text-bone">
                 Active Ground Reports ({filteredReports.length})
               </h3>
 
               {/* Status Filter */}
-              <div className="flex rounded-lg bg-deep border border-cyan/20 p-0.5 text-xs">
+              <div className="flex rounded-lg bg-carbon border border-graphite p-0.5 text-xs">
                 {['all', 'verified', 'corroborated', 'unverified'].map((st) => (
                   <button
                     key={st}
                     onClick={() => setFilterStatus(st)}
                     className={`px-2.5 py-1 rounded capitalize transition-colors ${
                       filterStatus === st
-                        ? 'bg-cyan text-abyss font-semibold'
-                        : 'text-offwhite/60 hover:text-cyan'
+                        ? 'bg-mint text-obsidian font-semibold'
+                        : 'text-ash hover:text-mint'
                     }`}
                   >
                     {st}
@@ -384,7 +384,7 @@ export const CommunityPage: React.FC = () => {
             </div>
 
             {filteredReports.length === 0 ? (
-              <div className="h-64 flex flex-col items-center justify-center glass-panel rounded-2xl border border-cyan/20 text-offwhite/50 text-xs">
+              <div className="h-64 flex flex-col items-center justify-center glass-panel rounded-2xl border border-graphite text-ash text-xs">
                 No ground reports match the selected filter.
               </div>
             ) : (
@@ -397,7 +397,7 @@ export const CommunityPage: React.FC = () => {
                   return (
                     <div
                       key={r._id}
-                      className="glass-panel p-4 sm:p-5 rounded-xl border border-cyan/20 space-y-3 hover:border-cyan/40 transition-colors"
+                      className="glass-panel p-4 sm:p-5 rounded-xl border border-graphite space-y-3 hover:border-mint/40 transition-colors"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div>
@@ -405,33 +405,33 @@ export const CommunityPage: React.FC = () => {
                             <span
                               className={`px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider border ${
                                 isVerified
-                                  ? 'bg-emerald-950/60 border-emerald-500/40 text-emerald-400'
+                                  ? 'bg-mint/10 border-mint/40 text-mint'
                                   : isCorroborated
-                                  ? 'bg-amber-950/60 border-amber-500/40 text-amber-300'
-                                  : 'bg-deep border-cyan/20 text-offwhite/60'
+                                  ? 'bg-ember/10 border-ember/40 text-ember'
+                                  : 'bg-carbon border-graphite text-ash'
                               }`}
                             >
                               {r.trustStatus}
                             </span>
-                            <span className="text-[11px] font-mono text-cyan uppercase">
+                            <span className="text-[11px] font-mono text-mint uppercase">
                               {r.reportType.replace('_', ' ')}
                             </span>
                           </div>
-                          <h4 className="font-semibold text-sm text-offwhite mt-1">{r.title}</h4>
+                          <h4 className="font-semibold text-sm text-bone mt-1">{r.title}</h4>
                         </div>
 
                         {r.waterDepthCm !== undefined && r.waterDepthCm > 0 && (
-                          <span className="font-mono text-xs font-semibold text-cyan bg-deep px-2 py-1 rounded border border-cyan/20">
+                          <span className="font-mono text-xs font-semibold text-mint bg-carbon px-2 py-1 rounded border border-graphite">
                             {r.waterDepthCm} cm depth
                           </span>
                         )}
                       </div>
 
-                      <p className="text-xs text-offwhite/80 leading-relaxed">{r.description}</p>
+                      <p className="text-xs text-ash leading-relaxed">{r.description}</p>
 
-                      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-cyan/10 text-[11px] text-offwhite/50">
+                      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-graphite text-[11px] text-ash">
                         <span className="flex items-center gap-1">
-                          <MapPin className="w-3 h-3 text-cyan" />
+                          <MapPin className="w-3 h-3 text-mint" />
                           <span>
                             {r.location.district} ({r.location.lat.toFixed(3)}, {r.location.lng.toFixed(3)})
                           </span>
@@ -444,16 +444,16 @@ export const CommunityPage: React.FC = () => {
 
                       {/* Volunteer/Admin verification actions */}
                       {canVerify && r.trustStatus === 'unverified' && (
-                        <div className="pt-2 border-t border-cyan/10 flex items-center justify-end gap-2">
+                        <div className="pt-2 border-t border-graphite flex items-center justify-end gap-2">
                           <button
                             onClick={() => handleVerify(r._id, 'corroborated')}
-                            className="px-2.5 py-1 rounded bg-amber-950/40 border border-amber-500/30 text-amber-300 text-xs hover:bg-amber-900/50"
+                            className="px-2.5 py-1 rounded bg-ember/10 border border-ember/30 text-ember text-xs hover:bg-ember/20"
                           >
                             Corroborate
                           </button>
                           <button
                             onClick={() => handleVerify(r._id, 'verified')}
-                            className="px-2.5 py-1 rounded bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs hover:bg-emerald-900/50 font-semibold"
+                            className="px-2.5 py-1 rounded bg-mint/10 border border-mint/30 text-mint text-xs hover:bg-mint/20 font-semibold"
                           >
                             Mark Verified
                           </button>
@@ -461,7 +461,7 @@ export const CommunityPage: React.FC = () => {
                       )}
 
                       {r.verifiedBy && (
-                        <div className="text-[10px] text-emerald-400 font-mono">
+                        <div className="text-[10px] text-mint font-mono">
                           ✓ Verified by {r.verifiedBy}
                         </div>
                       )}
@@ -478,4 +478,3 @@ export const CommunityPage: React.FC = () => {
     </div>
   );
 };
-

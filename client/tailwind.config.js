@@ -7,32 +7,48 @@ export default {
   theme: {
     extend: {
       colors: {
-        abyss: '#04101F',
-        deep: '#071B34',
-        ocean: '#0A4D8C',
-        cyan: {
-          DEFAULT: '#22D3EE',
-          glow: '#22D3EE',
-          dim: 'rgba(34, 211, 238, 0.15)',
+        obsidian: '#060606',
+        carbon: '#0E0F10',
+        graphite: '#1A1C1E',
+        bone: '#F4F1EA',
+        ash: '#9A9C9F',
+        mint: {
+          DEFAULT: '#5CFFB1',
+          dim: 'rgba(92, 255, 177, 0.12)',
+          glow: 'rgba(92, 255, 177, 0.35)',
         },
-        teal: {
-          DEFAULT: '#14B8A6',
-          glow: '#14B8A6',
+        ember: {
+          DEFAULT: '#FF7A2F',
+          dim: 'rgba(255, 122, 47, 0.12)',
+          glow: 'rgba(255, 122, 47, 0.35)',
         },
-        offwhite: '#F5FAFF',
         risk: {
-          low: '#10B981',
-          watch: '#F59E0B',
-          elevated: '#F97316',
-          high: '#EF4444',
+          low: '#5CFFB1',
+          watch: '#FFD166',
+          elevated: '#FF7A2F',
+          high: '#FF4D5E',
         },
       },
       fontFamily: {
-        display: ['Space Grotesk', 'sans-serif'],
+        display: ['Space Grotesk', 'Inter Tight', 'sans-serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+      },
+      boxShadow: {
+        'mint-glow': '0 0 25px rgba(92, 255, 177, 0.25)',
+        'ember-glow': '0 0 25px rgba(255, 122, 47, 0.25)',
+        'carbon-elevation': '0 10px 40px -10px rgba(0, 0, 0, 0.8)',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+      },
+      animation: {
+        marquee: 'marquee 35s linear infinite',
       },
     },
   },
   plugins: [],
 }
-

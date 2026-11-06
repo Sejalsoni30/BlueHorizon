@@ -12,40 +12,44 @@ interface RiskBadgeProps {
 export const RiskBadge: React.FC<RiskBadgeProps> = ({ level, className = '', showIcon = true }) => {
   const config = {
     Low: {
-      bg: 'bg-emerald-950/60',
-      border: 'border-emerald-500/30',
-      text: 'text-emerald-400',
+      bg: 'bg-mint/10',
+      border: 'border-mint/30',
+      text: 'text-mint',
       icon: ShieldCheck,
-      label: 'Low Risk'
+      label: 'Low Risk',
+      dotColor: '#5CFFB1',
     },
     Watch: {
-      bg: 'bg-amber-950/60',
-      border: 'border-amber-500/30',
-      text: 'text-amber-400',
+      bg: 'bg-[#FFD166]/10',
+      border: 'border-[#FFD166]/30',
+      text: 'text-[#FFD166]',
       icon: AlertCircle,
-      label: 'Watch'
+      label: 'Watch',
+      dotColor: '#FFD166',
     },
     Elevated: {
-      bg: 'bg-orange-950/60',
-      border: 'border-orange-500/30',
-      text: 'text-orange-400',
+      bg: 'bg-ember/10',
+      border: 'border-ember/30',
+      text: 'text-ember',
       icon: AlertTriangle,
-      label: 'Elevated Risk'
+      label: 'Elevated Risk',
+      dotColor: '#FF7A2F',
     },
     High: {
-      bg: 'bg-rose-950/60',
-      border: 'border-rose-500/40',
-      text: 'text-rose-400',
+      bg: 'bg-[#FF4D5E]/15',
+      border: 'border-[#FF4D5E]/40',
+      text: 'text-[#FF4D5E]',
       icon: AlertOctagon,
-      label: 'High Danger'
-    }
+      label: 'High Danger',
+      dotColor: '#FF4D5E',
+    },
   }[level];
 
   const Icon = config.icon;
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border font-tabular ${config.bg} ${config.border} ${config.text} ${className}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border font-tabular backdrop-blur-sm transition-colors ${config.bg} ${config.border} ${config.text} ${className}`}
       role="status"
       aria-label={`Risk Level: ${config.label}`}
     >
@@ -54,4 +58,3 @@ export const RiskBadge: React.FC<RiskBadgeProps> = ({ level, className = '', sho
     </span>
   );
 };
-

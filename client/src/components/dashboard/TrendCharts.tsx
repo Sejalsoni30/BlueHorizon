@@ -29,7 +29,6 @@ export const TrendCharts: React.FC<TrendChartsProps> = ({
   const [activeTab, setActiveTab] = useState<'hydrograph' | 'rainfall'>('hydrograph');
   const [showTableAlt, setShowTableAlt] = useState(false);
 
-  // Generate 7-day historical + 2-day forecast hydrograph
   const hydroData = [
     { day: 'Day -5', stage: Number((currentStageM - 1.4).toFixed(2)), rainfall: 8 },
     { day: 'Day -4', stage: Number((currentStageM - 1.1).toFixed(2)), rainfall: 14 },
@@ -42,34 +41,34 @@ export const TrendCharts: React.FC<TrendChartsProps> = ({
   ];
 
   return (
-    <div className="glass-panel p-6 rounded-2xl border border-cyan/20 space-y-4">
+    <div className="glass-panel p-6 sm:p-7 rounded-3xl border border-graphite space-y-4">
       {/* Header and Toggle */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-cyan/15">
-        <div className="flex items-center gap-2">
-          <Calendar className="w-4 h-4 text-cyan" />
-          <h3 className="font-display font-semibold text-sm sm:text-base text-offwhite">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-graphite">
+        <div className="flex items-center gap-2.5">
+          <Calendar className="w-4 h-4 text-mint" />
+          <h3 className="font-display font-bold text-base text-bone">
             Hydro-Meteorological Trends & 48h Outlook
           </h3>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="flex rounded-lg bg-deep border border-cyan/20 p-0.5 text-xs">
+          <div className="flex rounded-xl bg-carbon border border-graphite p-1 text-xs font-mono">
             <button
               onClick={() => setActiveTab('hydrograph')}
-              className={`px-3 py-1 rounded-md transition-colors ${
+              className={`px-3 py-1 rounded-lg transition-colors ${
                 activeTab === 'hydrograph'
-                  ? 'bg-cyan text-abyss font-semibold'
-                  : 'text-offwhite/70 hover:text-cyan'
+                  ? 'bg-mint text-obsidian font-bold'
+                  : 'text-ash hover:text-bone'
               }`}
             >
               River Stage
             </button>
             <button
               onClick={() => setActiveTab('rainfall')}
-              className={`px-3 py-1 rounded-md transition-colors ${
+              className={`px-3 py-1 rounded-lg transition-colors ${
                 activeTab === 'rainfall'
-                  ? 'bg-cyan text-abyss font-semibold'
-                  : 'text-offwhite/70 hover:text-cyan'
+                  ? 'bg-mint text-obsidian font-bold'
+                  : 'text-ash hover:text-bone'
               }`}
             >
               Precipitation
@@ -78,7 +77,7 @@ export const TrendCharts: React.FC<TrendChartsProps> = ({
 
           <button
             onClick={() => setShowTableAlt(!showTableAlt)}
-            className="p-1.5 rounded-lg bg-deep border border-cyan/20 text-cyan hover:border-cyan/50 text-xs flex items-center gap-1"
+            className="p-2 rounded-xl bg-carbon border border-graphite text-ash hover:text-mint hover:border-mint/30 text-xs flex items-center gap-1.5 transition-colors font-mono"
             title="Toggle Accessible Table View"
           >
             {showTableAlt ? <BarChart2 className="w-3.5 h-3.5" /> : <Table className="w-3.5 h-3.5" />}
@@ -87,32 +86,32 @@ export const TrendCharts: React.FC<TrendChartsProps> = ({
         </div>
       </div>
 
-      {/* Accessible Table Alternative for Screen Readers and Low Bandwidth */}
+      {/* Accessible Table Alternative */}
       {showTableAlt ? (
-        <div className="overflow-x-auto rounded-lg border border-cyan/20">
+        <div className="overflow-x-auto rounded-2xl border border-graphite">
           <table className="w-full text-xs text-left">
             <caption className="sr-only">7-Day Hydrograph and Rainfall Observations with 48-Hour Forecast</caption>
             <thead>
-              <tr className="bg-ocean/20 text-offwhite border-b border-cyan/20">
-                <th scope="col" className="p-2.5">Timeline Day</th>
-                <th scope="col" className="p-2.5 text-right font-tabular">River Stage (m)</th>
-                <th scope="col" className="p-2.5 text-right font-tabular">Precipitation (mm)</th>
-                <th scope="col" className="p-2.5">Threshold Status</th>
+              <tr className="bg-carbon text-bone border-b border-graphite font-mono text-[11px]">
+                <th scope="col" className="p-3">Timeline Day</th>
+                <th scope="col" className="p-3 text-right font-tabular">River Stage (m)</th>
+                <th scope="col" className="p-3 text-right font-tabular">Precipitation (mm)</th>
+                <th scope="col" className="p-3">Threshold Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-cyan/10">
+            <tbody className="divide-y divide-graphite font-mono">
               {hydroData.map((d) => (
-                <tr key={d.day} className="hover:bg-deep/50">
-                  <td className="p-2.5 text-offwhite">{d.day}</td>
-                  <td className="p-2.5 text-right font-mono text-cyan font-tabular">{d.stage}m</td>
-                  <td className="p-2.5 text-right font-mono text-offwhite/80 font-tabular">{d.rainfall}mm</td>
-                  <td className="p-2.5">
+                <tr key={d.day} className="hover:bg-carbon/60 transition-colors">
+                  <td className="p-3 text-bone">{d.day}</td>
+                  <td className="p-3 text-right text-mint font-tabular font-bold">{d.stage}m</td>
+                  <td className="p-3 text-right text-ash font-tabular">{d.rainfall}mm</td>
+                  <td className="p-3">
                     {d.stage >= dangerStageM ? (
-                      <span className="text-rose-400 font-semibold">Danger Exceeded</span>
+                      <span className="text-[#FF4D5E] font-bold">Danger Exceeded</span>
                     ) : d.stage >= warningStageM ? (
-                      <span className="text-amber-400 font-semibold">Warning Exceeded</span>
+                      <span className="text-[#FFD166] font-bold">Warning Exceeded</span>
                     ) : (
-                      <span className="text-emerald-400">Normal Range</span>
+                      <span className="text-mint">Normal Range</span>
                     )}
                   </td>
                 </tr>
@@ -126,77 +125,78 @@ export const TrendCharts: React.FC<TrendChartsProps> = ({
           {activeTab === 'hydrograph' ? (
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={hydroData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#071B34" />
-                <XAxis dataKey="day" stroke="#F5FAFF" opacity={0.6} tick={{ fontSize: 11 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#1A1C1E" />
+                <XAxis dataKey="day" stroke="#9A9C9F" opacity={0.6} tick={{ fontSize: 11, fontFamily: 'JetBrains Mono' }} />
                 <YAxis
                   domain={[
                     Math.floor(currentStageM - 2),
                     Math.ceil(dangerStageM + 1),
                   ]}
-                  stroke="#F5FAFF"
+                  stroke="#9A9C9F"
                   opacity={0.6}
-                  tick={{ fontSize: 11 }}
+                  tick={{ fontSize: 11, fontFamily: 'JetBrains Mono' }}
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#071B34',
-                    borderColor: 'rgba(34, 211, 238, 0.3)',
-                    borderRadius: '8px',
+                    backgroundColor: '#0E0F10',
+                    borderColor: 'rgba(244, 241, 234, 0.1)',
+                    borderRadius: '12px',
                     fontSize: '12px',
-                    color: '#F5FAFF',
+                    color: '#F4F1EA',
+                    fontFamily: 'JetBrains Mono',
                   }}
                   formatter={(val: any) => [`${val} m`, 'Water Stage']}
                 />
                 <ReferenceLine
                   y={dangerStageM}
-                  stroke="#EF4444"
+                  stroke="#FF4D5E"
                   strokeDasharray="4 4"
-                  label={{ value: 'Danger Level', fill: '#EF4444', fontSize: 10, position: 'top' }}
+                  label={{ value: 'Danger Level', fill: '#FF4D5E', fontSize: 10, position: 'top', fontFamily: 'JetBrains Mono' }}
                 />
                 <ReferenceLine
                   y={warningStageM}
-                  stroke="#F59E0B"
+                  stroke="#FFD166"
                   strokeDasharray="4 4"
-                  label={{ value: 'Warning Level', fill: '#F59E0B', fontSize: 10, position: 'top' }}
+                  label={{ value: 'Warning Level', fill: '#FFD166', fontSize: 10, position: 'top', fontFamily: 'JetBrains Mono' }}
                 />
                 <Line
                   type="monotone"
                   dataKey="stage"
-                  stroke="#22D3EE"
+                  stroke="#5CFFB1"
                   strokeWidth={2.5}
-                  dot={{ r: 3, fill: '#22D3EE' }}
-                  activeDot={{ r: 6, fill: '#14B8A6' }}
+                  dot={{ r: 3.5, fill: '#5CFFB1' }}
+                  activeDot={{ r: 6, fill: '#060606', stroke: '#5CFFB1', strokeWidth: 2 }}
                 />
               </LineChart>
             </ResponsiveContainer>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={hydroData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#071B34" />
-                <XAxis dataKey="day" stroke="#F5FAFF" opacity={0.6} tick={{ fontSize: 11 }} />
-                <YAxis stroke="#F5FAFF" opacity={0.6} tick={{ fontSize: 11 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#1A1C1E" />
+                <XAxis dataKey="day" stroke="#9A9C9F" opacity={0.6} tick={{ fontSize: 11, fontFamily: 'JetBrains Mono' }} />
+                <YAxis stroke="#9A9C9F" opacity={0.6} tick={{ fontSize: 11, fontFamily: 'JetBrains Mono' }} />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#071B34',
-                    borderColor: 'rgba(34, 211, 238, 0.3)',
-                    borderRadius: '8px',
+                    backgroundColor: '#0E0F10',
+                    borderColor: 'rgba(244, 241, 234, 0.1)',
+                    borderRadius: '12px',
                     fontSize: '12px',
-                    color: '#F5FAFF',
+                    color: '#F4F1EA',
+                    fontFamily: 'JetBrains Mono',
                   }}
                   formatter={(val: any) => [`${val} mm`, 'Rainfall']}
                 />
-                <Bar dataKey="rainfall" fill="#14B8A6" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="rainfall" fill="#5CFFB1" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           )}
         </div>
       )}
 
-      <div className="flex justify-between items-center text-[11px] text-offwhite/50 pt-2 border-t border-cyan/10">
+      <div className="flex justify-between items-center text-[11px] text-ash/60 pt-2 border-t border-graphite font-mono">
         <span>* Forecast data from +24h to +48h uses calibrated QPF and hydrological wave routing.</span>
-        <span className="font-mono text-cyan">Recharts Visualization Layer</span>
+        <span className="text-mint">Recharts Engine</span>
       </div>
     </div>
   );
 };
-

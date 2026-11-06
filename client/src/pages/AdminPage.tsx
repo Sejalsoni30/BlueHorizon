@@ -12,7 +12,7 @@ import {
 
 export const AdminPage: React.FC = () => {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<'pipeline' | 'models' | 'moderation' | 'audit'>('pipeline');
+  const [activeTab, setActiveTab] = useState<'pipeline' | 'models' | 'audit'>('pipeline');
 
   // Model validation metrics from approved research & model card
   const modelMetrics = {
@@ -54,25 +54,25 @@ export const AdminPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-abyss text-offwhite flex flex-col justify-between">
+    <div className="min-h-screen bg-obsidian text-bone flex flex-col justify-between">
       <Navbar />
 
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-6 flex-1">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-cyan/20">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-graphite">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs text-cyan font-mono mb-1">
+            <div className="inline-flex items-center gap-1.5 text-xs text-mint font-mono mb-1">
               <Server className="w-3.5 h-3.5" />
               <span>System Operations & Model Health Console</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-display font-bold text-offwhite">
+            <h1 className="text-2xl sm:text-3xl font-display font-bold text-bone">
               Administrator Governance Dashboard
             </h1>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-offwhite/60">Admin User:</span>
-            <span className="px-2.5 py-1 rounded bg-deep border border-cyan/30 text-xs font-mono text-cyan">
+            <span className="text-xs text-ash">Admin User:</span>
+            <span className="px-2.5 py-1 rounded bg-carbon border border-graphite text-xs font-mono text-mint">
               {user?.email || 'admin@bluehorizon.local'}
             </span>
           </div>
@@ -81,11 +81,11 @@ export const AdminPage: React.FC = () => {
         <StatutoryNotice />
 
         {/* Tab Switcher */}
-        <div className="flex flex-wrap rounded-xl bg-deep border border-cyan/20 p-1 text-xs font-medium gap-1">
+        <div className="flex flex-wrap rounded-xl bg-carbon border border-graphite p-1 text-xs font-medium gap-1">
           <button
             onClick={() => setActiveTab('pipeline')}
             className={`px-4 py-2 rounded-lg transition-all ${
-              activeTab === 'pipeline' ? 'bg-cyan text-abyss font-bold shadow' : 'text-offwhite/70 hover:text-cyan'
+              activeTab === 'pipeline' ? 'bg-mint text-obsidian font-bold shadow' : 'text-ash hover:text-mint'
             }`}
           >
             Pipeline & Telemetry Health
@@ -93,7 +93,7 @@ export const AdminPage: React.FC = () => {
           <button
             onClick={() => setActiveTab('models')}
             className={`px-4 py-2 rounded-lg transition-all ${
-              activeTab === 'models' ? 'bg-cyan text-abyss font-bold shadow' : 'text-offwhite/70 hover:text-cyan'
+              activeTab === 'models' ? 'bg-mint text-obsidian font-bold shadow' : 'text-ash hover:text-mint'
             }`}
           >
             Model Cards & Skill Metrics
@@ -101,7 +101,7 @@ export const AdminPage: React.FC = () => {
           <button
             onClick={() => setActiveTab('audit')}
             className={`px-4 py-2 rounded-lg transition-all ${
-              activeTab === 'audit' ? 'bg-cyan text-abyss font-bold shadow' : 'text-offwhite/70 hover:text-cyan'
+              activeTab === 'audit' ? 'bg-mint text-obsidian font-bold shadow' : 'text-ash hover:text-mint'
             }`}
           >
             System Audit Log
@@ -112,40 +112,40 @@ export const AdminPage: React.FC = () => {
         {activeTab === 'pipeline' && (
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-              <div className="glass-panel p-4 rounded-xl border border-cyan/20 space-y-1">
-                <span className="text-xs text-offwhite/60">Pipeline Latency</span>
-                <div className="text-2xl font-bold font-mono text-emerald-400 font-tabular">0.2 hrs</div>
-                <span className="text-[11px] text-emerald-400/80 flex items-center gap-1">
+              <div className="glass-panel p-4 rounded-xl border border-graphite space-y-1">
+                <span className="text-xs text-ash">Pipeline Latency</span>
+                <div className="text-2xl font-bold font-mono text-mint font-tabular">0.2 hrs</div>
+                <span className="text-[11px] text-mint/80 flex items-center gap-1">
                   <CheckCircle className="w-3 h-3" /> Nominal Operating State
                 </span>
               </div>
 
-              <div className="glass-panel p-4 rounded-xl border border-cyan/20 space-y-1">
-                <span className="text-xs text-offwhite/60">Sensors Monitored</span>
-                <div className="text-2xl font-bold font-mono text-cyan font-tabular">592 Stations</div>
-                <span className="text-[11px] text-offwhite/50">CWC Hydro Network</span>
+              <div className="glass-panel p-4 rounded-xl border border-graphite space-y-1">
+                <span className="text-xs text-ash">Sensors Monitored</span>
+                <div className="text-2xl font-bold font-mono text-mint font-tabular">592 Stations</div>
+                <span className="text-[11px] text-ash">CWC Hydro Network</span>
               </div>
 
-              <div className="glass-panel p-4 rounded-xl border border-cyan/20 space-y-1">
-                <span className="text-xs text-offwhite/60">Telemetry QC Pass Rate</span>
-                <div className="text-2xl font-bold font-mono text-cyan font-tabular">98.4%</div>
-                <span className="text-[11px] text-offwhite/50">Stuck-value & outlier filter</span>
+              <div className="glass-panel p-4 rounded-xl border border-graphite space-y-1">
+                <span className="text-xs text-ash">Telemetry QC Pass Rate</span>
+                <div className="text-2xl font-bold font-mono text-mint font-tabular">98.4%</div>
+                <span className="text-[11px] text-ash">Stuck-value & outlier filter</span>
               </div>
 
-              <div className="glass-panel p-4 rounded-xl border border-cyan/20 space-y-1">
-                <span className="text-xs text-offwhite/60">API Gateway Status</span>
-                <div className="text-2xl font-bold font-mono text-teal font-tabular">100% Up</div>
-                <span className="text-[11px] text-offwhite/50">Node.js Express + Python ML</span>
+              <div className="glass-panel p-4 rounded-xl border border-graphite space-y-1">
+                <span className="text-xs text-ash">API Gateway Status</span>
+                <div className="text-2xl font-bold font-mono text-mint font-tabular">100% Up</div>
+                <span className="text-[11px] text-ash">Node.js Express + Python ML</span>
               </div>
             </div>
 
             {/* Ingestion Sources Table */}
-            <div className="glass-panel p-6 rounded-2xl border border-cyan/20 space-y-4">
-              <h3 className="font-semibold text-sm text-offwhite">Ingestion Stream Register</h3>
-              <div className="overflow-x-auto rounded-lg border border-cyan/15">
+            <div className="glass-panel p-6 rounded-2xl border border-graphite space-y-4">
+              <h3 className="font-semibold text-sm text-bone">Ingestion Stream Register</h3>
+              <div className="overflow-x-auto rounded-lg border border-graphite">
                 <table className="w-full text-xs text-left">
                   <thead>
-                    <tr className="bg-ocean/20 text-offwhite border-b border-cyan/20">
+                    <tr className="bg-graphite/40 text-bone border-b border-graphite">
                       <th scope="col" className="p-3">Source Name</th>
                       <th scope="col" className="p-3">Update Cadence</th>
                       <th scope="col" className="p-3">Operational Latency</th>
@@ -153,15 +153,15 @@ export const AdminPage: React.FC = () => {
                       <th scope="col" className="p-3">Health Status</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-cyan/10">
+                  <tbody className="divide-y divide-graphite/40">
                     {ingestionSources.map((s) => (
-                      <tr key={s.name} className="hover:bg-deep/50">
-                        <td className="p-3 text-offwhite font-medium">{s.name}</td>
-                        <td className="p-3 text-offwhite/70">{s.frequency}</td>
-                        <td className="p-3 font-mono text-cyan font-tabular">{s.latency}</td>
-                        <td className="p-3 text-offwhite/60">{s.license}</td>
+                      <tr key={s.name} className="hover:bg-graphite/20">
+                        <td className="p-3 text-bone font-medium">{s.name}</td>
+                        <td className="p-3 text-ash">{s.frequency}</td>
+                        <td className="p-3 font-mono text-mint font-tabular">{s.latency}</td>
+                        <td className="p-3 text-ash">{s.license}</td>
                         <td className="p-3">
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-950/60 border border-emerald-500/30 text-emerald-400">
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-mint/10 border border-mint/30 text-mint">
                             {s.status}
                           </span>
                         </td>
@@ -179,93 +179,93 @@ export const AdminPage: React.FC = () => {
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Flood Model Card */}
-              <div className="glass-panel p-6 rounded-2xl border border-cyan/20 space-y-4">
-                <div className="pb-3 border-b border-cyan/15 flex items-center justify-between">
+              <div className="glass-panel p-6 rounded-2xl border border-graphite space-y-4">
+                <div className="pb-3 border-b border-graphite flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Cpu className="w-4 h-4 text-cyan" />
-                    <h3 className="font-semibold text-sm text-offwhite">Flood Risk Model Card</h3>
+                    <Cpu className="w-4 h-4 text-mint" />
+                    <h3 className="font-semibold text-sm text-bone">Flood Risk Model Card</h3>
                   </div>
-                  <span className="px-2 py-0.5 rounded text-[10px] bg-emerald-950 border border-emerald-500/40 text-emerald-300 font-mono">
+                  <span className="px-2 py-0.5 rounded text-[10px] bg-mint/10 border border-mint/40 text-mint font-mono">
                     {modelMetrics.flood.status}
                   </span>
                 </div>
 
-                <p className="text-xs text-offwhite/70 font-mono">{modelMetrics.flood.name}</p>
+                <p className="text-xs text-ash font-mono">{modelMetrics.flood.name}</p>
 
                 <div className="grid grid-cols-3 gap-3 text-xs">
-                  <div className="p-3 rounded-lg bg-deep/60 border border-cyan/10">
-                    <span className="text-offwhite/50 block text-[10px]">Brier Score</span>
-                    <span className="text-lg font-bold font-mono text-cyan font-tabular">
+                  <div className="p-3 rounded-lg bg-carbon border border-graphite">
+                    <span className="text-ash block text-[10px]">Brier Score</span>
+                    <span className="text-lg font-bold font-mono text-mint font-tabular">
                       {modelMetrics.flood.brierScore}
                     </span>
-                    <span className="text-[10px] text-emerald-400 block mt-0.5">
+                    <span className="text-[10px] text-mint block mt-0.5">
                       (-{modelMetrics.flood.calibrationGainPct}% vs base)
                     </span>
                   </div>
-                  <div className="p-3 rounded-lg bg-deep/60 border border-cyan/10">
-                    <span className="text-offwhite/50 block text-[10px]">ROC-AUC</span>
-                    <span className="text-lg font-bold font-mono text-offwhite font-tabular">
+                  <div className="p-3 rounded-lg bg-carbon border border-graphite">
+                    <span className="text-ash block text-[10px]">ROC-AUC</span>
+                    <span className="text-lg font-bold font-mono text-bone font-tabular">
                       {modelMetrics.flood.rocAuc}
                     </span>
-                    <span className="text-[10px] text-offwhite/40 block mt-0.5">PR-AUC: {modelMetrics.flood.prAuc}</span>
+                    <span className="text-[10px] text-ash block mt-0.5">PR-AUC: {modelMetrics.flood.prAuc}</span>
                   </div>
-                  <div className="p-3 rounded-lg bg-deep/60 border border-cyan/10">
-                    <span className="text-offwhite/50 block text-[10px]">CSI (Threat Score)</span>
-                    <span className="text-lg font-bold font-mono text-teal font-tabular">
+                  <div className="p-3 rounded-lg bg-carbon border border-graphite">
+                    <span className="text-ash block text-[10px]">CSI (Threat Score)</span>
+                    <span className="text-lg font-bold font-mono text-mint font-tabular">
                       {modelMetrics.flood.csi}
                     </span>
-                    <span className="text-[10px] text-offwhite/40 block mt-0.5">POD: {modelMetrics.flood.pod}</span>
+                    <span className="text-[10px] text-ash block mt-0.5">POD: {modelMetrics.flood.pod}</span>
                   </div>
                 </div>
 
-                <div className="p-3 rounded-lg bg-deep/50 text-[11px] text-offwhite/70 space-y-1">
-                  <span className="font-semibold text-cyan">Validation Leakage Prevention:</span>
+                <div className="p-3 rounded-lg bg-carbon text-[11px] text-ash space-y-1">
+                  <span className="font-semibold text-mint">Validation Leakage Prevention:</span>
                   <p>Walk-forward expanding window time-series splits across 2018–2024 monsoon seasons. Spatial basin holdouts verified on Krishna and Godavari sub-catchments.</p>
                 </div>
               </div>
 
               {/* Drought Model Card */}
-              <div className="glass-panel p-6 rounded-2xl border border-cyan/20 space-y-4">
-                <div className="pb-3 border-b border-cyan/15 flex items-center justify-between">
+              <div className="glass-panel p-6 rounded-2xl border border-graphite space-y-4">
+                <div className="pb-3 border-b border-graphite flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Cpu className="w-4 h-4 text-amber-400" />
-                    <h3 className="font-semibold text-sm text-offwhite">Drought Model Card</h3>
+                    <Cpu className="w-4 h-4 text-ember" />
+                    <h3 className="font-semibold text-sm text-bone">Drought Model Card</h3>
                   </div>
-                  <span className="px-2 py-0.5 rounded text-[10px] bg-emerald-950 border border-emerald-500/40 text-emerald-300 font-mono">
+                  <span className="px-2 py-0.5 rounded text-[10px] bg-ember/10 border border-ember/40 text-ember font-mono">
                     {modelMetrics.drought.status}
                   </span>
                 </div>
 
-                <p className="text-xs text-offwhite/70 font-mono">{modelMetrics.drought.name}</p>
+                <p className="text-xs text-ash font-mono">{modelMetrics.drought.name}</p>
 
                 <div className="grid grid-cols-3 gap-3 text-xs">
-                  <div className="p-3 rounded-lg bg-deep/60 border border-cyan/10">
-                    <span className="text-offwhite/50 block text-[10px]">MAE (SPEI-3)</span>
-                    <span className="text-lg font-bold font-mono text-amber-300 font-tabular">
+                  <div className="p-3 rounded-lg bg-carbon border border-graphite">
+                    <span className="text-ash block text-[10px]">MAE (SPEI-3)</span>
+                    <span className="text-lg font-bold font-mono text-ember font-tabular">
                       {modelMetrics.drought.mae}
                     </span>
-                    <span className="text-[10px] text-emerald-400 block mt-0.5">
+                    <span className="text-[10px] text-mint block mt-0.5">
                       (vs 0.68 base)
                     </span>
                   </div>
-                  <div className="p-3 rounded-lg bg-deep/60 border border-cyan/10">
-                    <span className="text-offwhite/50 block text-[10px]">Pearson r</span>
-                    <span className="text-lg font-bold font-mono text-offwhite font-tabular">
+                  <div className="p-3 rounded-lg bg-carbon border border-graphite">
+                    <span className="text-ash block text-[10px]">Pearson r</span>
+                    <span className="text-lg font-bold font-mono text-bone font-tabular">
                       {modelMetrics.drought.pearsonR}
                     </span>
-                    <span className="text-[10px] text-offwhite/40 block mt-0.5">High correlation</span>
+                    <span className="text-[10px] text-ash block mt-0.5">High correlation</span>
                   </div>
-                  <div className="p-3 rounded-lg bg-deep/60 border border-cyan/10">
-                    <span className="text-offwhite/50 block text-[10px]">Weighted F1</span>
-                    <span className="text-lg font-bold font-mono text-teal font-tabular">
+                  <div className="p-3 rounded-lg bg-carbon border border-graphite">
+                    <span className="text-ash block text-[10px]">Weighted F1</span>
+                    <span className="text-lg font-bold font-mono text-ember font-tabular">
                       {modelMetrics.drought.f1Score}
                     </span>
-                    <span className="text-[10px] text-offwhite/40 block mt-0.5">Tier classification</span>
+                    <span className="text-[10px] text-ash block mt-0.5">Tier classification</span>
                   </div>
                 </div>
 
-                <div className="p-3 rounded-lg bg-deep/50 text-[11px] text-offwhite/70 space-y-1">
-                  <span className="font-semibold text-amber-400">Methodological Standard:</span>
+                <div className="p-3 rounded-lg bg-carbon text-[11px] text-ash space-y-1">
+                  <span className="font-semibold text-ember">Methodological Standard:</span>
                   <p>Hargreaves potential evapotranspiration coupled with 90-day precipitation deficit. Quantile regression bounds provide calibrated statistical error envelopes.</p>
                 </div>
               </div>
@@ -275,32 +275,32 @@ export const AdminPage: React.FC = () => {
 
         {/* Tab 3: Audit Log */}
         {activeTab === 'audit' && (
-          <div className="glass-panel p-6 rounded-2xl border border-cyan/20 space-y-4">
-            <h3 className="font-semibold text-sm text-offwhite flex items-center gap-2">
-              <Clock className="w-4 h-4 text-cyan" /> Immutable Security & Telemetry Audit Log
+          <div className="glass-panel p-6 rounded-2xl border border-graphite space-y-4">
+            <h3 className="font-semibold text-sm text-bone flex items-center gap-2">
+              <Clock className="w-4 h-4 text-mint" /> Immutable Security & Telemetry Audit Log
             </h3>
             <div className="space-y-2">
               {auditLogs.map((log) => (
                 <div
                   key={log.id}
-                  className="p-3 rounded-lg bg-deep/60 border border-cyan/10 flex items-center justify-between gap-3 text-xs"
+                  className="p-3 rounded-lg bg-carbon border border-graphite flex items-center justify-between gap-3 text-xs"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-offwhite/50 text-[11px] font-tabular">{log.time}</span>
+                    <span className="font-mono text-ash text-[11px] font-tabular">{log.time}</span>
                     <span
                       className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold ${
                         log.level === 'WARN'
                           ? 'bg-amber-950/60 text-amber-300 border border-amber-500/30'
                           : log.level === 'AUTH'
-                          ? 'bg-emerald-950/60 text-emerald-300 border border-emerald-500/30'
-                          : 'bg-deep text-cyan border border-cyan/20'
+                          ? 'bg-mint/10 text-mint border border-mint/30'
+                          : 'bg-graphite text-mint border border-graphite'
                       }`}
                     >
                       {log.level}
                     </span>
-                    <span className="text-offwhite/80">{log.event}</span>
+                    <span className="text-bone">{log.event}</span>
                   </div>
-                  <span className="text-[10px] text-offwhite/40 font-mono">Node Watchdog</span>
+                  <span className="text-[10px] text-ash font-mono">Node Watchdog</span>
                 </div>
               ))}
             </div>

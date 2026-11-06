@@ -1,110 +1,79 @@
 import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { LiquidShaderPlane } from './LiquidShaderPlane';
 
-export const Hero3DScene: React.FC = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const waterRef = useRef<THREE.Mesh>(null);
-  const particlesRef = useRef<THREE.Points>(null);
+export const Hero3DScene: React.FC<{ scrollProgress?: number }> = ({ scrollProgress = 0 }) => {
+  const terrainRef = useRef<THREE.Mesh>(null);
+  const ringRef = useRef<THREE.Group>(null);
 
-  // Generate subtle undulation terrain
+  // Dynamic topographic low-poly terrain
   const terrainGeo = useMemo(() => {
-    const geo = new THREE.PlaneGeometry(30, 20, 48, 48);
+    const geo = new THREE.PlaneGeometry(16, 10, 36, 28);
     const pos = geo.attributes.position;
     for (let i = 0; i < pos.count; i++) {
       const x = pos.getX(i);
       const y = pos.getY(i);
-      // Gentle valley and riverbed depression
-      const z = Math.sin(x * 0.2) * 1.2 + Math.cos(y * 0.25) * 0.8 - Math.exp(-(x * x) * 0.05) * 1.5;
+      const z = Math.sin(x * 0.4) * 0.7 + Math.cos(y * 0.5) * 0.5 - Math.exp(-(x * x) * 0.1) * 1.1;
       pos.setZ(i, z);
     }
     geo.computeVertexNormals();
     return geo;
   }, []);
 
-  // Sparse rain particles
-  const particleGeo = useMemo(() => {
-    const count = 300;
-    const positions = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 25;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
-      positions[i * 3 + 2] = Math.random() * 8;
-    }
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    return geo;
-  }, []);
-
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
-    if (waterRef.current) {
-      // Gentle undulating waterline
-      waterRef.current.position.z = -0.4 + Math.sin(t * 0.8) * 0.08;
+    const pointer = state.pointer;
+
+    if (terrainRef.current) {
+      terrainRef.current.rotation.z = Math.sin(t * 0.15) * 0.05 + pointer.x * 0.08;
+      terrainRef.current.rotation.x = -Math.PI / 3 + pointer.y * 0.06;
+      terrainRef.current.position.y = -1.6 + Math.sin(t * 0.4) * 0.08;
     }
-    if (particlesRef.current) {
-      const pos = particlesRef.current.geometry.attributes.position;
-      for (let i = 0; i < pos.count; i++) {
-        let z = pos.getZ(i) - 0.08;
-        if (z < -1) z = 8;
-        pos.setZ(i, z);
-      }
-      pos.needsUpdate = true;
+
+    if (ringRef.current) {
+      ringRef.current.rotation.y = t * 0.2 + pointer.x * 0.3;
+      ringRef.current.rotation.x = Math.sin(t * 0.15) * 0.15 + pointer.y * 0.2;
     }
   });
 
   return (
     <>
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[10, 15, 10]} intensity={1.2} color="#22D3EE" />
-      <pointLight position={[-8, -5, 4]} intensity={0.8} color="#14B8A6" />
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[6, 10, 8]} intensity={1.4} color="#5CFFB1" />
+      <pointLight position={[-6, -4, 4]} intensity={0.9} color="#FF7A2F" />
 
-      {/* Topographic valley terrain */}
+      {/* Interactive Liquid Fluid Shader Plane */}
+      <LiquidShaderPlane scrollProgress={scrollProgress} />
+
+      {/* Floating Low-Poly Topographic Terrain */}
       <mesh
-        ref={meshRef}
+        ref={terrainRef}
         geometry={terrainGeo}
         rotation={[-Math.PI / 3, 0, 0]}
-        position={[0, -2, -2]}
+        position={[0, -1.6, 0.4]}
       >
         <meshStandardMaterial
-          color="#071B34"
-          roughness={0.8}
-          metalness={0.2}
-          wireframe={false}
-          flatShading
+          color="#0E0F10"
+          emissive="#5CFFB1"
+          emissiveIntensity={0.08}
+          roughness={0.7}
+          metalness={0.3}
+          wireframe={true}
         />
       </mesh>
 
-      {/* Shader-like dynamic water surface */}
-      <mesh
-        ref={waterRef}
-        rotation={[-Math.PI / 3, 0, 0]}
-        position={[0, -2.2, -0.4]}
-      >
-        <planeGeometry args={[28, 18, 32, 32]} />
-        <meshPhysicalMaterial
-          color="#0A4D8C"
-          emissive="#22D3EE"
-          emissiveIntensity={0.2}
-          roughness={0.1}
-          metalness={0.9}
-          transmission={0.6}
-          transparent
-          opacity={0.85}
-        />
-      </mesh>
-
-      {/* Sparse soft rain particles */}
-      <points ref={particlesRef} geometry={particleGeo}>
-        <pointsMaterial
-          size={0.06}
-          color="#22D3EE"
-          transparent
-          opacity={0.5}
-          blending={THREE.AdditiveBlending}
-        />
-      </points>
+      {/* Rotating Contour Elevation Rings */}
+      <group ref={ringRef} position={[2.8, 0.6, -0.5]}>
+        <mesh rotation={[Math.PI / 4, 0, 0]}>
+          <torusGeometry args={[1.6, 0.015, 16, 64]} />
+          <meshBasicMaterial color="#5CFFB1" transparent opacity={0.35} />
+        </mesh>
+        <mesh rotation={[Math.PI / 3, Math.PI / 6, 0]}>
+          <torusGeometry args={[2.1, 0.012, 16, 64]} />
+          <meshBasicMaterial color="#FF7A2F" transparent opacity={0.25} />
+        </mesh>
+      </group>
     </>
   );
 };
-

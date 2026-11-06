@@ -43,18 +43,18 @@ export const DashboardPage: React.FC = () => {
   }, [selectedId]);
 
   return (
-    <div className="min-h-screen bg-abyss text-offwhite flex flex-col justify-between">
+    <div className="min-h-screen bg-obsidian text-bone flex flex-col justify-between">
       <Navbar />
 
-      <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-6 flex-1">
+      <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-7 flex-1">
         {/* Top Control Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-cyan/20">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-graphite">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs text-cyan font-mono mb-1">
+            <div className="inline-flex items-center gap-1.5 text-xs text-mint font-mono mb-1">
               <Activity className="w-3.5 h-3.5" />
               <span>Real-Time Environmental Intelligence Layer</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-display font-bold text-offwhite">
+            <h1 className="text-2xl sm:text-4xl font-display font-extrabold text-bone tracking-tight">
               {data?.catchment.name || 'Catchment Monitoring'}
             </h1>
           </div>
@@ -67,7 +67,7 @@ export const DashboardPage: React.FC = () => {
             />
             <Link
               to="/simulator"
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-cyan text-abyss font-semibold text-xs hover:bg-cyan/90 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-mint text-obsidian font-bold text-xs hover:bg-mint/90 transition-all mint-border-glow"
             >
               <span>Test What-If Runoff</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -91,15 +91,15 @@ export const DashboardPage: React.FC = () => {
         <StatutoryNotice />
 
         {loading || !data ? (
-          <div className="h-96 flex flex-col items-center justify-center space-y-3 glass-panel rounded-2xl border border-cyan/20">
-            <div className="w-8 h-8 rounded-full border-2 border-cyan border-t-transparent animate-spin" />
-            <span className="text-xs text-offwhite/60 font-mono">
+          <div className="h-96 flex flex-col items-center justify-center space-y-3 glass-panel rounded-3xl border border-graphite">
+            <div className="w-8 h-8 rounded-full border-2 border-mint border-t-transparent animate-spin" />
+            <span className="text-xs text-ash font-mono">
               Calibrating hydro-meteorological models...
             </span>
           </div>
         ) : (
-          <div className="space-y-6">
-            {/* Dual Hazard Grid: Flood Risk + Drought Risk */}
+          <div className="space-y-7">
+            {/* Dual Hazard Grid: Flood Risk (Mint) + Drought Risk (Ember) */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <FloodRiskCard
                 rainfall24h={data.weather.rainfall24hMm}
@@ -135,24 +135,24 @@ export const DashboardPage: React.FC = () => {
               rainfall24h={data.weather.rainfall24hMm}
             />
 
-            {/* Quick Link to Actionable Preparedness */}
-            <div className="glass-panel p-5 rounded-2xl border border-cyan/20 flex flex-col sm:flex-row items-center justify-between gap-4 bg-deep/50">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-teal/20 border border-teal/40 flex items-center justify-center text-teal">
-                  <Layers className="w-5 h-5" />
+            {/* Actionable Preparedness Card */}
+            <div className="glass-panel p-6 sm:p-7 rounded-3xl border border-graphite flex flex-col sm:flex-row items-center justify-between gap-5 bg-carbon/90">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-mint/10 border border-mint/30 flex items-center justify-center text-mint flex-shrink-0">
+                  <Layers className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-sm text-offwhite">
+                  <h4 className="font-display font-bold text-base text-bone">
                     Need an Action Plan for This Location?
                   </h4>
-                  <p className="text-xs text-offwhite/60">
+                  <p className="text-xs text-ash">
                     Generate an instant, household-tailored preparedness checklist for this catchment.
                   </p>
                 </div>
               </div>
               <Link
                 to="/preparedness"
-                className="px-4 py-2 rounded-lg bg-teal text-abyss font-bold text-xs hover:bg-teal/90 transition-colors whitespace-nowrap"
+                className="px-5 py-2.5 rounded-xl bg-mint text-obsidian font-bold text-xs hover:bg-mint/90 transition-all mint-border-glow whitespace-nowrap"
               >
                 Generate Tailored Checklist
               </Link>

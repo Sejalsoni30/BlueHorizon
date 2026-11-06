@@ -4,157 +4,196 @@ import { Hero3DScene } from './Hero3DScene';
 import { RiskBadge } from '../common/RiskBadge';
 import { DataQualityBadge } from '../common/DataQualityBadge';
 import { DemoBadge } from '../common/DemoBadge';
-import { ShieldCheck, TrendingUp } from 'lucide-react';
+import { ShieldCheck, TrendingUp, ArrowRight } from 'lucide-react';
+import { usePreferences } from '../../context/PreferencesContext';
+import { motion } from 'framer-motion';
 
-export const Hero3DCanvas: React.FC = () => {
+export const Hero3DCanvas: React.FC<{ scrollProgress?: number }> = ({ scrollProgress = 0 }) => {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [useFallback, setUseFallback] = useState(false);
+  const [hasWebGL, setHasWebGL] = useState(true);
+  const { lowBandwidth, prefersReducedMotion } = usePreferences();
 
   useEffect(() => {
-    // Check WebGL availability and reduced motion
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) {
-      setUseFallback(true);
-      return;
-    }
-
     try {
       const canvas = document.createElement('canvas');
       const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      if (!gl) setUseFallback(true);
+      if (!gl) setHasWebGL(false);
     } catch {
-      setUseFallback(true);
+      setHasWebGL(false);
     }
+
+    if (prefersReducedMotion) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       const { innerWidth, innerHeight } = window;
-      const x = (e.clientX / innerWidth - 0.5) * 20; // tilt degrees
-      const y = (e.clientY / innerHeight - 0.5) * -20;
+      const x = (e.clientX / innerWidth - 0.5) * 16;
+      const y = (e.clientY / innerHeight - 0.5) * -16;
       setTilt({ x, y });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [prefersReducedMotion]);
+
+  const useFallback = !hasWebGL || lowBandwidth || prefersReducedMotion;
+
+  // Staggered character reveal configuration
+  const titleLine1 = "See the Risk.";
+  const titleLine3 = "It Happens.";
 
   return (
-    <div className="relative w-full h-[640px] md:h-[720px] overflow-hidden rounded-2xl border border-cyan/20 bg-abyss">
-      {/* 3D WebGL Scene or Static Fallback */}
+    <div className="relative w-full min-h-[660px] md:min-h-[760px] overflow-hidden rounded-3xl border border-graphite bg-obsidian">
+      {/* 3D WebGL Fluid Canvas or Dark Carbon Static Fallback */}
       {useFallback ? (
-        <div className="absolute inset-0 bg-gradient-to-b from-ocean/20 via-deep to-abyss flex items-center justify-center">
-          <div className="w-full h-full opacity-30 bg-[radial-gradient(#22D3EE_1px,transparent_1px)] [background-size:24px_24px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-carbon via-obsidian to-obsidian flex items-center justify-center">
+          <div className="w-full h-full opacity-25 bg-[radial-gradient(#5CFFB1_1px,transparent_1px)] [background-size:28px_28px]" />
         </div>
       ) : (
         <div className="absolute inset-0 z-0">
           <Canvas
-            camera={{ position: [0, 0, 7], fov: 45 }}
+            camera={{ position: [0, 0, 6.5], fov: 42 }}
             dpr={[1, 2]}
             gl={{ antialias: true, powerPreference: 'high-performance' }}
           >
             <Suspense fallback={null}>
-              <Hero3DScene />
+              <Hero3DScene scrollProgress={scrollProgress} />
             </Suspense>
           </Canvas>
         </div>
       )}
 
-      {/* Subtle vignette & ambient caustics */}
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-abyss via-transparent to-transparent opacity-80" />
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-abyss/80 via-transparent to-abyss/40" />
+      {/* Atmospheric vignette */}
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent" />
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-obsidian/90 via-transparent to-obsidian/40" />
 
-      {/* Floating Interactive Tilting Glass Risk Card */}
-      <div className="absolute inset-0 z-10 flex items-center justify-center sm:justify-end sm:pr-12 md:pr-20 p-4 pointer-events-none">
-        <div
-          className="pointer-events-auto w-full max-w-sm glass-panel p-6 rounded-2xl transition-transform duration-200 ease-out border border-cyan/30 shadow-2xl"
-          style={{
-            transform: `perspective(1000px) rotateX(${tilt.y * 0.7}deg) rotateY(${tilt.x * 0.7}deg)`,
-          }}
-        >
-          <div className="flex items-center justify-between pb-3 border-b border-cyan/15">
-            <div className="flex items-center gap-2">
-              <RiskBadge level="Elevated" />
-              <DemoBadge />
-            </div>
-            <DataQualityBadge score={92} latencyHrs={0.4} />
-          </div>
-
-          <div className="mt-4 space-y-3">
-            <div className="flex items-baseline justify-between">
-              <div>
-                <span className="text-3xl font-display font-bold text-offwhite font-tabular">
-                  78%
-                </span>
-                <span className="text-xs text-offwhite/60 ml-2">surge probability</span>
-              </div>
-              <div className="text-right">
-                <span className="text-xs text-cyan font-mono font-medium">90% Conf. Band</span>
-                <p className="text-xs text-offwhite/80 font-tabular">+1.8m ± 0.3m</p>
-              </div>
-            </div>
-
-            {/* Visual Probability Bar */}
-            <div className="w-full bg-deep rounded-full h-2 overflow-hidden border border-cyan/15">
-              <div
-                className="bg-gradient-to-r from-teal to-cyan h-full rounded-full transition-all duration-1000"
-                style={{ width: '78%' }}
-              />
-            </div>
-
-            {/* Hyperlocal Plain-Language 'Why' */}
-            <div className="p-2.5 rounded-lg bg-deep/80 border border-cyan/15 text-xs text-offwhite/80 space-y-1">
-              <div className="flex items-center gap-1.5 font-medium text-cyan">
-                <TrendingUp className="w-3.5 h-3.5 text-cyan" />
-                <span>Primary Risk Driver</span>
-              </div>
-              <p className="text-[11px] leading-relaxed">
-                Catchment soil saturation reached 86% following 74mm upstream downpour; low-lying drainage depressions at risk within 12 hours.
-              </p>
-            </div>
-
-            <div className="flex items-center justify-between text-[11px] text-offwhite/50 pt-2 border-t border-cyan/10">
-              <span>Location: Godavari Basin (Sector 4)</span>
-              <span className="flex items-center gap-1 text-emerald-400">
-                <ShieldCheck className="w-3 h-3" /> Sensor Verified
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Hero Headline Overlay (Left aligned) */}
-      <div className="absolute inset-0 z-10 flex items-center justify-start p-6 sm:p-12 md:p-16 pointer-events-none">
-        <div className="max-w-xl pointer-events-auto space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan/30 bg-deep/60 backdrop-blur-md text-xs text-cyan">
-            <span className="w-2 h-2 rounded-full bg-cyan animate-pulse" />
+      {/* Main Grid Content */}
+      <div className="relative z-10 w-full min-h-[660px] md:min-h-[760px] p-6 sm:p-12 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-10">
+        
+        {/* Left Column: Masked Typography */}
+        <div className="max-w-2xl space-y-6 text-left">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-mint/25 bg-carbon/80 backdrop-blur-md text-xs font-mono text-mint">
+            <span className="w-2 h-2 rounded-full bg-mint animate-pulse" />
             Complementary Intelligence Layer
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold text-offwhite tracking-tight leading-[1.1]">
-            See the Risk. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan via-teal to-offwhite">
-              Prepare Before It Happens.
+          <h1 className="font-display font-extrabold tracking-tight text-bone text-4xl sm:text-6xl md:text-7xl lg:text-[5.4rem] leading-[1.04]">
+            <span className="block overflow-hidden">
+              <motion.span
+                initial={{ y: '100%', rotate: 3 }}
+                animate={{ y: 0, rotate: 0 }}
+                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                className="inline-block"
+              >
+                {titleLine1}
+              </motion.span>
+            </span>
+            <span className="block overflow-hidden">
+              <motion.span
+                initial={{ y: '100%', rotate: 3 }}
+                animate={{ y: 0, rotate: 0 }}
+                transition={{ duration: 0.95, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                className="inline-block"
+              >
+                <span className="text-mint mint-glow font-bold">Prepare</span> Before
+              </motion.span>
+            </span>
+            <span className="block overflow-hidden">
+              <motion.span
+                initial={{ y: '100%', rotate: 3 }}
+                animate={{ y: 0, rotate: 0 }}
+                transition={{ duration: 1.0, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+                className="inline-block text-ash/90"
+              >
+                {titleLine3}
+              </motion.span>
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base text-offwhite/70 leading-relaxed">
-            BlueHorizon translates authoritative hydrometeorological forecasts into calibrated, explainable, and localized hazard intelligence. We don't replace government warnings—we make them trustworthy, localized, and actionable.
-          </p>
+          <motion.p
+            initial={{ opacity: 0, filter: 'blur(8px)' }}
+            animate={{ opacity: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 1.1, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="text-sm sm:text-base text-ash max-w-lg leading-relaxed"
+          >
+            BlueHorizon enhances government hydrometeorological forecasts through reliable data interpretation, explainable risk assessments, and personalized actionability.
+          </motion.p>
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <a
-              href="#interactive-teaser"
-              className="px-5 py-2.5 rounded-lg bg-cyan text-abyss font-semibold text-xs sm:text-sm hover:bg-cyan/90 transition-all cyan-border-glow"
+              href="#story-start"
+              className="group px-6 py-3 rounded-xl bg-mint text-obsidian font-bold text-xs sm:text-sm hover:bg-mint/90 transition-all mint-border-glow flex items-center gap-2"
             >
-              Explore What-If Teaser
+              <span>Explore The System</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
             <a
               href="/dashboard"
-              className="px-5 py-2.5 rounded-lg glass-card text-offwhite hover:text-cyan border border-cyan/30 text-xs sm:text-sm font-medium transition-all"
+              className="px-6 py-3 rounded-xl bg-carbon hover:bg-graphite border border-graphite text-bone text-xs sm:text-sm font-semibold transition-all hover:border-mint/40"
             >
-              Open Live Dashboard
+              Live Intelligence Canvas
             </a>
           </div>
         </div>
+
+        {/* Right Column: Tilting Glass Risk Assessment Card */}
+        <div className="w-full max-w-sm flex-shrink-0">
+          <div
+            className="w-full glass-panel-mint p-6 rounded-2xl border border-mint/25 shadow-2xl transition-transform duration-200 ease-out"
+            style={{
+              transform: `perspective(1000px) rotateX(${tilt.y * 0.6}deg) rotateY(${tilt.x * 0.6}deg)`,
+            }}
+          >
+            <div className="flex items-center justify-between pb-3 border-b border-graphite">
+              <div className="flex items-center gap-2">
+                <RiskBadge level="Elevated" />
+                <DemoBadge />
+              </div>
+              <DataQualityBadge score={92} latencyHrs={0.4} />
+            </div>
+
+            <div className="mt-5 space-y-4">
+              <div className="flex items-baseline justify-between">
+                <div>
+                  <span className="text-3xl font-display font-extrabold text-bone font-tabular">
+                    78%
+                  </span>
+                  <span className="text-xs text-ash ml-2 font-mono">surge probability</span>
+                </div>
+                <div className="text-right">
+                  <span className="text-xs text-mint font-mono font-semibold">90% Conf. Band</span>
+                  <p className="text-xs text-bone font-tabular font-medium">+1.8m ± 0.3m</p>
+                </div>
+              </div>
+
+              {/* Visual Probability Bar */}
+              <div className="w-full bg-obsidian rounded-full h-2 overflow-hidden border border-graphite">
+                <div
+                  className="bg-gradient-to-r from-mint to-mint h-full rounded-full transition-all duration-1000 shadow-[0_0_12px_#5CFFB1]"
+                  style={{ width: '78%' }}
+                />
+              </div>
+
+              {/* Hyperlocal Plain-Language 'Why' */}
+              <div className="p-3.5 rounded-xl bg-carbon/90 border border-graphite text-xs text-ash space-y-1.5">
+                <div className="flex items-center gap-1.5 font-semibold text-mint">
+                  <TrendingUp className="w-3.5 h-3.5 text-mint" />
+                  <span>Primary Risk Driver</span>
+                </div>
+                <p className="text-[11px] leading-relaxed text-ash">
+                  Catchment soil saturation reached 86% following 74mm upstream downpour; low-lying drainage depressions at risk within 12 hours.
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between text-[11px] text-ash/70 pt-2 border-t border-graphite">
+                <span>Location: Godavari Basin (Sector 4)</span>
+                <span className="flex items-center gap-1 text-mint font-mono">
+                  <ShieldCheck className="w-3 h-3" /> Telemetry Verified
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
