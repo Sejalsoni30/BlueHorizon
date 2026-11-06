@@ -159,3 +159,22 @@ textarea:focus-visible {
     display: none;
   }
 }
+
+/* Leaflet Dark Popup Styles */
+.bluehorizon-popup .leaflet-popup-content-wrapper {
+  background: #0E0F10 !important;
+  color: #F4F1EA !important;
+  border: 1px solid #1A1C1E !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
+}
+.bluehorizon-popup .leaflet-popup-tip {
+  background: #0E0F10 !important;
+}
+.bluehorizon-popup .leaflet-popup-close-button {
+  color: #9A9C9F !important;
+}
+.bluehorizon-popup .leaflet-popup-close-button:hover {
+  color: #5CFFB1 !important;
+}
+

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { Layers, ShieldCheck, Droplet, Sun, Table, Map } from 'lucide-react';
+import { Layers, ShieldCheck, Droplet, Sun, Table, Map, Globe } from 'lucide-react';
 import { RiskBadge } from '../common/RiskBadge';
 
 const floodIcon = new L.DivIcon({
@@ -41,11 +41,32 @@ const STATIONS: MapItem[] = [
   { id: '5', name: 'Sangam Bridge Citizen Ping', lat: 18.5314, lng: 73.8653, type: 'report', status: 'Verified', details: 'Water overtopping causeway by 30cm' },
 ];
 
+type BaseMapType = 'dark' | 'satellite' | 'street';
+
+const BASEMAPS: Record<BaseMapType, { url: string; attribution: string; maxZoom: number }> = {
+  dark: {
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+    attribution: '&copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, DeLorme, NAVTEQ',
+    maxZoom: 16,
+  },
+  satellite: {
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    attribution: '&copy; <a href="https://www.esri.com/">Esri</a> &mdash; Earthstar Geographics',
+    maxZoom: 18,
+  },
+  street: {
+    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19,
+  },
+};
+
 export const HazardMap: React.FC = () => {
   const [showFlood, setShowFlood] = useState(true);
   const [showDrought, setShowDrought] = useState(true);
   const [showReports, setShowReports] = useState(true);
   const [showTableAlt, setShowTableAlt] = useState(false);
+  const [baseMap, setBaseMap] = useState<BaseMapType>('dark');
 
   const filteredItems = STATIONS.filter((item) => {
     if (item.type === 'flood' && !showFlood) return false;
@@ -66,7 +87,38 @@ export const HazardMap: React.FC = () => {
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          {/* Toggles */}
+          {/* Basemap Selector */}
+          <div className="flex rounded-xl bg-carbon border border-graphite p-1 text-xs font-mono">
+            <button
+              onClick={() => setBaseMap('dark')}
+              className={`px-2.5 py-1 rounded-lg transition-colors ${
+                baseMap === 'dark' ? 'bg-mint text-obsidian font-bold' : 'text-ash hover:text-mint'
+              }`}
+              title="Dark Cartography (No API Key Required)"
+            >
+              Dark
+            </button>
+            <button
+              onClick={() => setBaseMap('satellite')}
+              className={`px-2.5 py-1 rounded-lg transition-colors ${
+                baseMap === 'satellite' ? 'bg-mint text-obsidian font-bold' : 'text-ash hover:text-mint'
+              }`}
+              title="Satellite Radar & Terrain"
+            >
+              Satellite
+            </button>
+            <button
+              onClick={() => setBaseMap('street')}
+              className={`px-2.5 py-1 rounded-lg transition-colors ${
+                baseMap === 'street' ? 'bg-mint text-obsidian font-bold' : 'text-ash hover:text-mint'
+              }`}
+              title="OpenStreetMap Street View"
+            >
+              OSM
+            </button>
+          </div>
+
+          {/* Hazard Layer Toggles */}
           <div className="flex rounded-xl bg-carbon border border-graphite p-1 text-xs font-mono">
             <button
               onClick={() => setShowFlood(!showFlood)}
@@ -146,8 +198,10 @@ export const HazardMap: React.FC = () => {
             scrollWheelZoom={false}
           >
             <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+              key={baseMap}
+              attribution={BASEMAPS[baseMap].attribution}
+              url={BASEMAPS[baseMap].url}
+              maxZoom={BASEMAPS[baseMap].maxZoom}
             />
 
             {filteredItems.map((item) => {
@@ -188,8 +242,10 @@ export const HazardMap: React.FC = () => {
       )}
 
       <div className="flex flex-wrap items-center justify-between text-[11px] text-ash/60 pt-2 border-t border-graphite font-mono">
-        <span>Cartography by OpenStreetMap (ODbL 1.0) & CartoDB Dark Matter.</span>
-        <span className="text-mint">Leaflet GIS Engine</span>
+        <span className="flex items-center gap-1.5">
+          <Globe className="w-3.5 h-3.5 text-mint" /> Open Cartographic Feeds (Esri World Canvas / OSM — 100% Free, Zero Key)
+        </span>
+        <span className="text-mint">Leaflet Web-GIS Engine</span>
       </div>
     </div>
   );
